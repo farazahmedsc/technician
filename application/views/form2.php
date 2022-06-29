@@ -292,147 +292,16 @@
 
 
 
-                  <form class="forms-sample" id="formTech" method="post" action="<?php echo base_url();?>form/create"
+                  <form class="forms-sample" id="formTech" method="post" action="<?php echo base_url();?>form/store/pu"
                 enctype="multipart/form-data">
                   <!-- Package Unit 1 (2) Start -->
 
-                <div id="packageUnit1">
-                    <input type="text" value="1" name="packageUnitLength" id="packageUnitLength" class="d-none">
-                  <div class="row" id="pu1">
-                    <div class="col-md-12">
-                      <div class="headingForm">
-                        <h3>Package Unit</h3>
-                      </div>
-                    </div>
 
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Manufacturer *</label>
-                        <input type="text" class="form-control" name="pu_manufacturer1" placeholder="Manufacturer">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Model Number *</label>
-                        <input type="text" class="form-control" name="pu_model1" placeholder="Model Number">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Serial Number *</label>
-                        <input type="text" class="form-control" name="pu_serial1" placeholder="Serial Number">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>BTU Input *</label>
-                        <input type="text" class="form-control" name="pu_btu_input1" placeholder="BTU Input">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>BTU Output *</label>
-                        <input type="text" class="form-control" name="pu_btu_output1" placeholder="BTU Output">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Efficiency *</label>
-                        <input type="text" class="form-control" name="pu_efficiency1" placeholder="Efficiency">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Tonnage *</label>
-                        <select class="form-control" name="pu_tonnage1">
-                          <option value="Default">Default</option>
-                          <option value="0.75">0.75</option>
-                          <option value="1">1</option>
-                          <option value="1.5">1.5</option>
-                          <option value="2">2</option>
-                          <option value="2.5">2.5</option>
-                          <option value="3">3</option>
-                          <option value="3.5">3.5</option>
-                          <option value="4">4</option>
-                          <option value="4.5">4.5</option>
-                          <option value="5">5</option>
-                        </select>
-
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Seers *</label>
-                        <select class="form-control" name="pu_seer1">
-                          <option value="Default">Default</option>
-                          <option value="14">14</option>
-                          <option value="15">15</option>
-                          <option value="16">16</option>
-                          <option value="17">17</option>
-                          <option value="18">18</option>
-                        </select>
-
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-                
-
-
-
-
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label>Package Unit Image</label>
-                        <input type="file" name="pu_image1[]" class="file-upload-default">
-                        <div class="input-group col-xs-12">
-                          <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
-                          <span class="input-group-append">
-                            <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
-                          </span>
-                        </div>
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-                  </div>
-
-                  
-
-                </div>
-                
-                <div id="packageUnit_btn">
-                    <div class="col-md-12">
-                        <button type="button" class="btn btn-primary mr-2" onclick="packageUnit1_Back()">Back</button>
-                        <button type="button" class="btn btn-primary mr-2" onclick="packageUnit1_Submit()">Next</button>
-                        <button type="button" class="btn btn-light float-right" onclick="packageUnit1_Clear()">Clear
-                            Form</button>
-
-                    </div>
-
-                    <div class="col-md-12 mt-4">
-                        <button type="button" class="btn btn-info mr-2" onclick="packageUnit_addMore()">Add More</button>
-                        <button type="button" class="btn btn-danger mr-2" onclick="packageUnit_lessOne()">Less One</button>
-                    </div>
-                </div>
-
-
+                      <?php include('layout/package_unit.php') ?>
 
                   <!-- Package Unit 1 (2) End -->
+
+                  </form>
 
 
                   <!-- Central Split AC (3) Start -->
@@ -1491,7 +1360,7 @@
 
 
 
-              </form>
+              <!-- </form> -->
 
 
 
@@ -1667,6 +1536,7 @@
       if (unit_type == "Package_Unit" && allow) {
         $("#packageUnit1").show();
         $("#packageUnit_btn").show();
+        fillInitialForm('pu');
         
         $("#hersTitle").append(" > Package Unit");
 
@@ -1695,6 +1565,20 @@
         alert("Kindly fill all the fields");
         $("#initialForm").show();
       }
+
+    }
+
+    function fillInitialForm(p){
+      $(`input[name=${p}url]`).val($("input[name=url]").val());
+      $(`input[name=${p}no_of_form]`).val($("input[name=no_of_form]").val());
+      $(`input[name=${p}test_name]`).val($("input[name=test_name]").val());
+      $(`input[name=${p}company_name]`).val($("input[name=company_name]").val());
+      $(`input[name=${p}site_address]`).val($("input[name=site_address]").val());
+      $(`input[name=${p}email]`).val($("input[name=email]").val());
+      $(`input[name=${p}duct_location]`).val($("input[name=duct_location]").val());
+      $(`input[name=${p}number_of_bedroom]`).val( $("select[name=number_of_bedroom] option:selected").val());
+      $(`input[name=${p}url]`).val($("input[name=url]").val());
+      $(`input[name=${p}url]`).val($("input[name=url]").val());
 
     }
 
