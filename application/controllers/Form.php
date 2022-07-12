@@ -134,9 +134,8 @@ class Form extends CI_Controller {
 		
 		for($j=0; $j<12; $j++){
 
-		// $fNameArray = ["pu_image" , "cs_image" , "cg_image"];
-		$fName = $fNameArray[$j];
 		
+		$fName = $fNameArray[$j];
 
 		   $fn = array ();
             $countfiles = count($_FILES[$fName]['name']);
@@ -164,13 +163,6 @@ class Form extends CI_Controller {
                 $new_name = $_FILES[$fName]['name'][$i];
                 $new_name = str_replace(" ","_",$new_name);
 				$config['file_name'] = $new_name;
-
-
-
-				// $source, $path, $quality
-				
-				
-
 
                 array_push($fn,$new_name);
 
@@ -638,18 +630,21 @@ class Form extends CI_Controller {
 
 	public function read(){
 		$this->adminCheck();
-		$data['form_list'] = $this->M_Form->get();
-        $this->load->view('table',$data);
+		// $data['form_list'] = $this->M_Form->get();
+		$data['form_list'] = $this->M_Form->get2();
+		// echo "<pre>";
+		// print_r($data['form_list']);
+        $this->load->view('table2',$data);
 	}
 
 	public function update($id){
 		$this->sessionCheck();
 
 		$role = $this->session->userdata('role');
-		$data['fs'] = $this->M_Form->getById($id);
+		$data['fs'] = $this->M_Form->getById2($id);
 
 		if($role == 'admin'){			
-			$this->load->view('form_upd', $data);
+			$this->load->view('form_upd2', $data);
 		}else if ($role == 'technician'){
 			$loggedUser = $this->session->userdata('loggedUser');
 
@@ -1868,5 +1863,663 @@ class Form extends CI_Controller {
 		echo "<pre>";
 		print_r($data['user_single']->u_email);
 	} 
+
+	function test(){
+		$v = json_encode($this->input->post('field'));
+
+
+		echo "<pre>";
+		print_r($v);
+	}
+
+	function pu_submit2(){
+	// $a = implode(",", $this->input->post('pu_image'));
+	// 	echo "<pre>";
+	// 	print_r($a);
+
+
+	// 	echo "=============";
+	// 	$b = $this->input->post('pu_image');
+	// 	print_r($b);
+
+	// 	echo "=============";
+	// 	$c = implode(",", $this->input->post('pu_manufacturer'));
+
+
+
+		for($j=0; $j<$this->input->post('pu_manufacturer'); $j++){
+
+		
+			$fName = "pu_image" . ($j+1);
+	
+			   $fn = array ();
+				$countfiles = count($_FILES[$fName]['name']);
+				
+				$path = './uploads/' . $this->input->post('pu_test_name');
+				if(!is_dir($path)){
+					mkdir($path);
+				}
+				// Looping all files
+				for($i=0;$i<$countfiles;$i++) {
+					// Define new $_FILES array - $_FILES['file']
+					$_FILES['file']['name'] = $_FILES[$fName]['name'][$i];
+					$_FILES['file']['type'] = $_FILES[$fName]['type'][$i];
+					$_FILES['file']['tmp_name'] = $_FILES[$fName]['tmp_name'][$i];
+					$_FILES['file']['error'] = $_FILES[$fName]['error'][$i];
+					$_FILES['file']['size'] = $_FILES[$fName]['size'][$i];
+	
+	
+					$config['upload_path']          = $path ;
+					$config['allowed_types']        = '*';
+					$config['max_size']             = 10024; // 10mb you can set the value you want
+					$config['max_width']            = 6000; // 6000px you can set the value you want
+					$config['max_height']           = 6000; // 6000px
+					
+					$new_name = $_FILES[$fName]['name'][$i];
+					$new_name = str_replace(" ","_",$new_name);
+					$config['file_name'] = $new_name;
+	
+					array_push($fn,$new_name);
+	
+					$this->load->library('upload', $config);
+	
+					if ( ! $this->upload->do_upload('file'))
+					{
+							$error = array('error' => $this->upload->display_errors());
+					}
+					else
+					{
+							$uploadedData = array('upload_data' => $this->upload->data());
+							$full_name = $path . '/' . $new_name;				
+							$info = getimagesize($full_name);
+				
+							if ($info['mime'] == 'image/jpeg') 
+								$image = imagecreatefromjpeg($full_name);
+				
+							elseif ($info['mime'] == 'image/gif') 
+								$image = imagecreatefromgif($full_name);
+				
+							elseif ($info['mime'] == 'image/png') 
+								$image = imagecreatefrompng($full_name);
+				
+							imagejpeg($image, $full_name, 60);
+					}
+	
+					unset($this->upload);
+	
+				}
+	
+			   $file[$fName] =  implode(',',$fn);
+			   echo "======================";
+				echo "<pre>";
+				print_r($file);
+			}
+			
+
+	}
+	function pu_submit(){
+		$test_name = $this->input->post('pu_test_name');
+		$ini = "pu_";
+		include('images/pu_submit_pu_image.php');
+		include('images/pu_submit_fulltime_image.php');
+
+		$form_data = (object)[
+			'unit_type' => 'Package Unit',
+			'duct_location' => $this->input->post('pu_duct_location'),
+			'number_of_bedroom' => $this->input->post('pu_number_of_bedroom'),
+			'fulltime' => $this->input->post('pu_fulltime'),
+			'pu_manufacturer' => json_encode($this->input->post('pu_manufacturer')),
+			'pu_model' => json_encode($this->input->post('pu_model')),
+			'pu_serial' => json_encode($this->input->post('pu_serial')),
+			'pu_btu_input' => json_encode($this->input->post('pu_btu_input')),
+			'pu_btu_output' => json_encode($this->input->post('pu_btu_output')),
+			'pu_efficiency' => json_encode($this->input->post('pu_efficiency')),
+			'pu_tonnage' => json_encode($this->input->post('pu_tonnage')),
+			'pu_seer' => json_encode($this->input->post('pu_seer')),
+			'pu_image' => json_encode($images),			
+			'putest_duct_leak_result' => $this->input->post('putest_duct_leak_result'),
+			'putest_ductLeakage' => $this->input->post('putest_ductLeakage'),
+			'putest_fanWatt' => $this->input->post('putest_fanWatt'),
+			'putest_cfm1' => $this->input->post('putest_cfm1'),
+			'putest_location1' => $this->input->post('putest_location1'),
+			'putest_cfm2' => $this->input->post('putest_cfm2'),
+			'putest_location2' => $this->input->post('putest_location2'),
+			'putest_cfm3' => $this->input->post('putest_cfm3'),
+			'putest_location3' => $this->input->post('putest_location3'),
+			'putest_cfm4' => $this->input->post('putest_cfm4'),
+			'putest_location4' => $this->input->post('putest_location4'),
+			'putest_cfm5' => $this->input->post('putest_cfm5'),
+			'putest_location5' => $this->input->post('putest_location5'),
+			'pu_ref_image' => json_encode($image_file['pu_ref_image']),
+			'pu_win_image' => json_encode($image_file['pu_win_image']),
+			'pu_water_image' => json_encode($image_file['pu_water_image']),
+			'pu_kitchen_image' => json_encode($image_file['pu_kitchen_image']),
+			'pu_notes' => $this->input->post('pu_notes')
+		];
+		$form_data = json_encode($form_data);
+
+
+		$form_id = $this->input->post('pu_id');
+
+
+
+
+		if($form_id == "NA"){
+
+			$basic_info = (object)[
+				'test_name' => $this->input->post('pu_test_name'),
+				'company_name' => $this->input->post('pu_company_name'),
+				'site_address' => $this->input->post('pu_company_name'),
+				'email' => $this->input->post('pu_email')
+			];
+			$basic_info = json_encode($basic_info);
+
+			$data['tech_id'] = $this->input->post('pu_tech_id');
+			$data['no_of_form'] = $this->input->post('pu_no_of_form');
+			$data['basic_info'] = $basic_info;
+			$data['form_1'] = $form_data;
+
+			$result = $this->M_Form->form2_create($data);
+			$form_id = $this->M_Form->form2_lastRow();
+			$form_id = $form_id->id;
+			$form = array(
+				'no_of_form' => $data['no_of_form'] + 1,
+				'form_id' => $form_id,
+				'test_name' => $this->input->post('pu_test_name'),
+				'company_name' => $this->input->post('pu_company_name'),
+				'site_address' => $this->input->post('pu_company_name'),
+				'email' => $this->input->post('pu_email')
+			);
+			$this->session->set_userdata('form', $form);
+			if($result>0){
+				$this->session->set_flashdata('message_success', 'Form 1 Submitted Successfully!');
+			}else{
+				$this->session->set_flashdata('message_error', 'Not submitted');
+			}
+			$submit = $this->input->post('pu_submit');
+
+			if($submit == "NA"){
+				// return $this->load->view('form2');die;
+				redirect("form");
+			}else{
+				$this->session->unset_userdata('form');
+				redirect("dashboard");
+			}
+
+
+		}else{
+			$data['id'] = $form_id;
+			$data['no_of_form'] =  $this->input->post('pu_no_of_form');
+			$data['form_'. $data['no_of_form']] = $form_data;
+			
+			// echo "<pre>";
+			// print_r($data);
+			// die;
+			$result = $this->M_Form->form2_update($data);
+
+			$form = array(
+				'no_of_form' => $data['no_of_form'] + 1,
+				'form_id' => $form_id,
+				'test_name' => $this->input->post('pu_test_name'),
+				'company_name' => $this->input->post('pu_company_name'),
+				'site_address' => $this->input->post('pu_company_name'),
+				'email' => $this->input->post('pu_email')
+			);
+			$this->session->set_userdata('form', $form);
+
+			if($result>0){
+				$this->session->set_flashdata('message_success', 'Form '.$data['no_of_form'].' Submitted Successfully!');
+				
+			}else{
+				$this->session->set_flashdata('message_error', 'Not submitted');				
+			}
+
+			$submit = $this->input->post('pu_submit');
+			if($submit == "NA"){
+				// return $this->load->view('form2');die;
+				redirect("form");
+			}else{
+				$this->session->unset_userdata('form');
+				redirect("dashboard");
+			}
+		}
+
+
+		
+	}
+
+
+	function cs_submit(){
+		$test_name = $this->input->post('cs_test_name');
+		$ini = "cg_";
+		include('images/pu_submit_pu_image.php');
+		$cg_image = $images;
+
+		$ini = "cs_";
+		include('images/pu_submit_pu_image.php');
+		$cs_image = $images;
+
+		$ini = "acc_";
+		include('images/pu_submit_pu_image.php');
+		$acc_image = $images;
+
+		$ini = "cs_";
+		include('images/pu_submit_fulltime_image.php');
+
+		$form_data = (object)[
+			'unit_type' => 'Central Split AC',
+			'duct_location' => $this->input->post('cs_duct_location'),
+			'number_of_bedroom' => $this->input->post('cs_number_of_bedroom'),
+			'fulltime' => $this->input->post('cs_fulltime'),
+			'cg_manufacturer' => json_encode($this->input->post('cg_manufacturer')),
+			'cg_model' => json_encode($this->input->post('cg_model')),
+			'cg_serial' => json_encode($this->input->post('cg_serial')),
+			'cg_btu_input' => json_encode($this->input->post('cg_btu_input')),
+			'cg_btu_output' => json_encode($this->input->post('cg_btu_output')),
+			'cg_efficiency' => json_encode($this->input->post('cg_efficiency')),
+			'cg_image' => json_encode($cg_image),	
+			'cs_manufacturer' => json_encode($this->input->post('cs_manufacturer')),
+			'cs_model' => json_encode($this->input->post('cs_model')),
+			'cs_serial' => json_encode($this->input->post('cs_serial')),
+			'cs_tonnage' => json_encode($this->input->post('cs_tonnage')),
+			'cs_seer' => json_encode($this->input->post('cs_seer')),
+			'cs_image' => json_encode($cs_image),	
+			'acc_manufacturer' => json_encode($this->input->post('acc_manufacturer')),
+			'acc_model' => json_encode($this->input->post('acc_model')),
+			'acc_serial' => json_encode($this->input->post('acc_serial')),
+			'acc_image' => json_encode($acc_image),			
+			'cstest_duct_leak_result' => $this->input->post('cstest_duct_leak_result'),
+			'cstest_ductLeakage' => $this->input->post('cstest_ductLeakage'),
+			'cstest_fanWatt' => $this->input->post('cstest_fanWatt'),
+			'cstest_cfm1' => $this->input->post('cstest_cfm1'),
+			'cstest_location1' => $this->input->post('cstest_location1'),
+			'cstest_cfm2' => $this->input->post('cstest_cfm2'),
+			'cstest_location2' => $this->input->post('cstest_location2'),
+			'cstest_cfm3' => $this->input->post('cstest_cfm3'),
+			'cstest_location3' => $this->input->post('cstest_location3'),
+			'cstest_cfm4' => $this->input->post('cstest_cfm4'),
+			'cstest_location4' => $this->input->post('cstest_location4'),
+			'cstest_cfm5' => $this->input->post('cstest_cfm5'),
+			'cstest_location5' => $this->input->post('cstest_location5'),
+			'cs_ref_image' => json_encode($image_file['cs_ref_image']),
+			'cs_win_image' => json_encode($image_file['cs_win_image']),
+			'cs_water_image' => json_encode($image_file['cs_water_image']),
+			'cs_kitchen_image' => json_encode($image_file['cs_kitchen_image']),
+			'cs_notes' => $this->input->post('cs_notes')
+		];
+		$form_data = json_encode($form_data);
+
+
+		$form_id = $this->input->post('cs_id');
+
+
+
+
+		if($form_id == "NA"){
+
+			$basic_info = (object)[
+				'test_name' => $this->input->post('cs_test_name'),
+				'company_name' => $this->input->post('cs_company_name'),
+				'site_address' => $this->input->post('cs_site_address'),
+				'email' => $this->input->post('cs_email')
+			];
+			$basic_info = json_encode($basic_info);
+
+			$data['tech_id'] = $this->input->post('cs_tech_id');
+			$data['no_of_form'] = $this->input->post('cs_no_of_form');
+			$data['basic_info'] = $basic_info;
+			$data['form_1'] = $form_data;
+
+			$result = $this->M_Form->form2_create($data);
+			$form_id = $this->M_Form->form2_lastRow();
+			$form_id = $form_id->id;
+			$form = array(
+				'no_of_form' => $data['no_of_form'] + 1,
+				'form_id' => $form_id,
+				'test_name' => $this->input->post('cs_test_name'),
+				'company_name' => $this->input->post('cs_company_name'),
+				'site_address' => $this->input->post('cs_site_address'),
+				'email' => $this->input->post('cs_email')
+			);
+			$this->session->set_userdata('form', $form);
+			if($result>0){
+				$this->session->set_flashdata('message_success', 'Form 1 Submitted Successfully!');
+			}else{
+				$this->session->set_flashdata('message_error', 'Not submitted');
+			}
+			$submit = $this->input->post('cs_submit');
+
+			if($submit == "NA"){
+				// return $this->load->view('form2');die;
+				redirect("form");
+			}else{
+				$this->session->unset_userdata('form');
+				redirect("dashboard");
+			}
+
+
+		}else{
+			$data['id'] = $form_id;
+			$data['no_of_form'] =  $this->input->post('cs_no_of_form');
+			$data['form_'. $data['no_of_form']] = $form_data;
+			
+			// echo "<pre>";
+			// print_r($data);
+			// die;
+			$result = $this->M_Form->form2_update($data);
+
+			$form = array(
+				'no_of_form' => $data['no_of_form'] + 1,
+				'form_id' => $form_id,
+				'test_name' => $this->input->post('cs_test_name'),
+				'company_name' => $this->input->post('cs_company_name'),
+				'site_address' => $this->input->post('cs_company_name'),
+				'email' => $this->input->post('cs_email')
+			);
+			$this->session->set_userdata('form', $form);
+
+			if($result>0){
+				$this->session->set_flashdata('message_success', 'Form '.$data['no_of_form'].' Submitted Successfully!');
+				
+			}else{
+				$this->session->set_flashdata('message_error', 'Not submitted');				
+			}
+
+			$submit = $this->input->post('cs_submit');
+			if($submit == "NA"){
+				// return $this->load->view('form2');die;
+				redirect("form");
+			}else{
+				$this->session->unset_userdata('form');
+				redirect("dashboard");
+			}
+		}
+
+
+	}
+
+	function hp_submit(){
+		
+		$test_name = $this->input->post('hp_test_name');
+		$ini = "air_";
+		include('images/pu_submit_pu_image.php');
+		$air_image = $images;
+
+		$ini = "heat_";
+		include('images/pu_submit_pu_image.php');
+		$heat_image = $images;
+
+		$ini = "hpacc_";
+		include('images/pu_submit_pu_image.php');
+		$hpacc_image = $images;
+
+		$ini = "hp_";
+		include('images/pu_submit_fulltime_image.php');
+
+		$form_data = (object)[
+			'unit_type' => 'Heat Pump',
+			'duct_location' => $this->input->post('hp_duct_location'),
+			'number_of_bedroom' => $this->input->post('hp_number_of_bedroom'),
+			'fulltime' => $this->input->post('hp_fulltime'),
+			'air_manufacturer' => json_encode($this->input->post('air_manufacturer')),
+			'air_model' => json_encode($this->input->post('air_model')),
+			'air_serial' => json_encode($this->input->post('air_serial')),
+			'air_btu_input' => json_encode($this->input->post('air_btu_input')),
+			'air_btu_output' => json_encode($this->input->post('air_btu_output')),
+			'air_efficiency' => json_encode($this->input->post('air_efficiency')),
+			'air_image' => json_encode($air_image),	
+			'heat_manufacturer' => json_encode($this->input->post('heat_manufacturer')),
+			'heat_model' => json_encode($this->input->post('heat_model')),
+			'heat_serial' => json_encode($this->input->post('heat_serial')),
+			'heat_tonnage' => json_encode($this->input->post('heat_tonnage')),
+			'heat_seer' => json_encode($this->input->post('heat_seer')),
+			'heat_image' => json_encode($heat_image),	
+			'hpacc_manufacturer' => json_encode($this->input->post('hpacc_manufacturer')),
+			'hpacc_model' => json_encode($this->input->post('hpacc_model')),
+			'hpacc_serial' => json_encode($this->input->post('hpacc_serial')),
+			'hpacc_image' => json_encode($hpacc_image),			
+			'hptest_duct_leak_result' => $this->input->post('hptest_duct_leak_result'),
+			'hptest_ductLeakage' => $this->input->post('hptest_ductLeakage'),
+			'hptest_fanWatt' => $this->input->post('hptest_fanWatt'),
+			'hptest_cfm1' => $this->input->post('hptest_cfm1'),
+			'hptest_location1' => $this->input->post('hptest_location1'),
+			'hptest_cfm2' => $this->input->post('hptest_cfm2'),
+			'hptest_location2' => $this->input->post('hptest_location2'),
+			'hptest_cfm3' => $this->input->post('hptest_cfm3'),
+			'hptest_location3' => $this->input->post('hptest_location3'),
+			'hptest_cfm4' => $this->input->post('hptest_cfm4'),
+			'hptest_location4' => $this->input->post('hptest_location4'),
+			'hptest_cfm5' => $this->input->post('hptest_cfm5'),
+			'hptest_location5' => $this->input->post('hptest_location5'),
+			'hp_ref_image' => json_encode($image_file['hp_ref_image']),
+			'hp_win_image' => json_encode($image_file['hp_win_image']),
+			'hp_water_image' => json_encode($image_file['hp_water_image']),
+			'hp_kitchen_image' => json_encode($image_file['hp_kitchen_image']),
+			'hp_notes' => $this->input->post('hp_notes')
+		];
+		$form_data = json_encode($form_data);
+
+
+		$form_id = $this->input->post('hp_id');
+
+
+
+
+		if($form_id == "NA"){
+
+			$basic_info = (object)[
+				'test_name' => $this->input->post('hp_test_name'),
+				'company_name' => $this->input->post('hp_company_name'),
+				'site_address' => $this->input->post('hp_site_address'),
+				'email' => $this->input->post('hp_email')
+			];
+			$basic_info = json_encode($basic_info);
+
+			$data['tech_id'] = $this->input->post('hp_tech_id');
+			$data['no_of_form'] = $this->input->post('hp_no_of_form');
+			$data['basic_info'] = $basic_info;
+			$data['form_1'] = $form_data;
+
+			$result = $this->M_Form->form2_create($data);
+			$form_id = $this->M_Form->form2_lastRow();
+			$form_id = $form_id->id;
+			$form = array(
+				'no_of_form' => $data['no_of_form'] + 1,
+				'form_id' => $form_id,
+				'test_name' => $this->input->post('hp_test_name'),
+				'company_name' => $this->input->post('hp_company_name'),
+				'site_address' => $this->input->post('hp_company_name'),
+				'email' => $this->input->post('hp_email')
+			);
+			$this->session->set_userdata('form', $form);
+			if($result>0){
+				$this->session->set_flashdata('message_success', 'Form 1 Submitted Successfully!');
+			}else{
+				$this->session->set_flashdata('message_error', 'Not submitted');
+			}
+			$submit = $this->input->post('hp_submit');
+
+			if($submit == "NA"){
+				// return $this->load->view('form2');die;
+				redirect("form");
+			}else{
+				$this->session->unset_userdata('form');
+				redirect("dashboard");
+			}
+
+
+		}else{
+			$data['id'] = $form_id;
+			$data['no_of_form'] =  $this->input->post('hp_no_of_form');
+			$data['form_'. $data['no_of_form']] = $form_data;
+			
+			// echo "<pre>";
+			// print_r($data);
+			// die;
+			$result = $this->M_Form->form2_update($data);
+
+			$form = array(
+				'no_of_form' => $data['no_of_form'] + 1,
+				'form_id' => $form_id,
+				'test_name' => $this->input->post('hp_test_name'),
+				'company_name' => $this->input->post('hp_company_name'),
+				'site_address' => $this->input->post('hp_company_name'),
+				'email' => $this->input->post('hp_email')
+			);
+			$this->session->set_userdata('form', $form);
+
+			if($result>0){
+				$this->session->set_flashdata('message_success', 'Form '.$data['no_of_form'].' Submitted Successfully!');
+				
+			}else{
+				$this->session->set_flashdata('message_error', 'Not submitted');				
+			}
+
+			$submit = $this->input->post('hp_submit');
+			if($submit == "NA"){
+				// return $this->load->view('form2');die;
+				redirect("form");
+			}else{
+				$this->session->unset_userdata('form');
+				redirect("dashboard");
+			}
+		}
+	}
+
+	function du_submit(){
+		$test_name = $this->input->post('du_test_name');
+		$ini = "in_";
+		include('images/pu_submit_pu_image.php');
+		$in_image = $images;
+
+		$ini = "con_";
+		include('images/pu_submit_pu_image.php');
+		$con_image = $images;
+		
+		$ini = "hpacc_";
+		include('images/pu_submit_pu_image.php');
+		$hpacc_image = $images;
+
+		$ini = "du_";
+		include('images/pu_submit_fulltime_image.php');
+
+		$form_data = (object)[
+			'unit_type' => 'Ductless Unit',
+			'duct_location' => $this->input->post('du_duct_location'),
+			'number_of_bedroom' => $this->input->post('du_number_of_bedroom'),
+			'fulltime' => $this->input->post('du_fulltime'),
+			'in_manufacturer' => json_encode($this->input->post('in_manufacturer')),
+			'in_model' => json_encode($this->input->post('in_model')),
+			'in_serial' => json_encode($this->input->post('in_serial')),
+			'in_btu_input' => json_encode($this->input->post('in_btu_input')),
+			'in_btu_output' => json_encode($this->input->post('in_btu_output')),
+			'in_image' => json_encode($in_image),	
+			'con_manufacturer' => json_encode($this->input->post('con_manufacturer')),
+			'con_model' => json_encode($this->input->post('con_model')),
+			'con_serial' => json_encode($this->input->post('con_serial')),
+			'con_btu_input' => json_encode($this->input->post('con_btu_input')),
+			'con_tonnage' => json_encode($this->input->post('con_tonnage')),
+			'con_seer' => json_encode($this->input->post('con_seer')),
+			'con_pounds' => json_encode($this->input->post('con_pounds')),
+			'con_ounces' => json_encode($this->input->post('con_ounces')),
+			'con_image' => json_encode($con_image),				
+			'du_ref_image' => json_encode($image_file['du_ref_image']),
+			'du_win_image' => json_encode($image_file['du_win_image']),
+			'du_water_image' => json_encode($image_file['du_water_image']),
+			'du_kitchen_image' => json_encode($image_file['du_kitchen_image']),
+			'du_notes' => $this->input->post('du_notes')
+		];
+		$form_data = json_encode($form_data);
+
+
+		$form_id = $this->input->post('hp_id');
+
+
+
+
+		if($form_id == "NA"){
+
+			$basic_info = (object)[
+				'test_name' => $this->input->post('hp_test_name'),
+				'company_name' => $this->input->post('hp_company_name'),
+				'site_address' => $this->input->post('hp_site_address'),
+				'email' => $this->input->post('hp_email')
+			];
+			$basic_info = json_encode($basic_info);
+
+			$data['tech_id'] = $this->input->post('hp_tech_id');
+			$data['no_of_form'] = $this->input->post('hp_no_of_form');
+			$data['basic_info'] = $basic_info;
+			$data['form_1'] = $form_data;
+
+			$result = $this->M_Form->form2_create($data);
+			$form_id = $this->M_Form->form2_lastRow();
+			$form_id = $form_id->id;
+			$form = array(
+				'no_of_form' => $data['no_of_form'] + 1,
+				'form_id' => $form_id,
+				'test_name' => $this->input->post('hp_test_name'),
+				'company_name' => $this->input->post('hp_company_name'),
+				'site_address' => $this->input->post('hp_company_name'),
+				'email' => $this->input->post('hp_email')
+			);
+			$this->session->set_userdata('form', $form);
+			if($result>0){
+				$this->session->set_flashdata('message_success', 'Form 1 Submitted Successfully!');
+			}else{
+				$this->session->set_flashdata('message_error', 'Not submitted');
+			}
+			$submit = $this->input->post('hp_submit');
+
+			if($submit == "NA"){
+				// return $this->load->view('form2');die;
+				redirect("form");
+			}else{
+				$this->session->unset_userdata('form');
+				redirect("dashboard");
+			}
+
+
+		}else{
+			$data['id'] = $form_id;
+			$data['no_of_form'] =  $this->input->post('cs_no_of_form');
+			$data['form_'. $data['no_of_form']] = $form_data;
+			
+			// echo "<pre>";
+			// print_r($data);
+			// die;
+			$result = $this->M_Form->form2_update($data);
+
+			$form = array(
+				'no_of_form' => $data['no_of_form'] + 1,
+				'form_id' => $form_id,
+				'test_name' => $this->input->post('cs_test_name'),
+				'company_name' => $this->input->post('cs_company_name'),
+				'site_address' => $this->input->post('cs_company_name'),
+				'email' => $this->input->post('cs_email')
+			);
+			$this->session->set_userdata('form', $form);
+
+			if($result>0){
+				$this->session->set_flashdata('message_success', 'Form '.$data['no_of_form'].' Submitted Successfully!');
+				
+			}else{
+				$this->session->set_flashdata('message_error', 'Not submitted');				
+			}
+
+			$submit = $this->input->post('cs_submit');
+			if($submit == "NA"){
+				// return $this->load->view('form2');die;
+				redirect("form");
+			}else{
+				$this->session->unset_userdata('form');
+				redirect("dashboard");
+			}
+		}
+	}
+
+	
+
+
 
 }

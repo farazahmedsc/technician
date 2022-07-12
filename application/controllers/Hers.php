@@ -103,10 +103,33 @@ class Hers extends CI_Controller {
 		$this->load->view('home', $data);
 
 	}
+	// $this->load->model('M_Form');
+	// $form_id = $this->M_Form->form2_lastRow();
+
+	// echo "<pre>";
+	// echo $form_id->id;
+	// print_r($form_id);
+	public function unsetForm(){
+		$this->session->unset_userdata('form');
+	}
 	public function form(){
+	
+		// 
 		$this->adminCheck();
-		
-			$this->load->view('form2');
+		$this->session->userdata('role');
+		$form = array(
+			'no_of_form' => 1,
+			'form_id' => 'NA',
+			'test_name' => '',
+			'company_name' => '',
+			'site_address' => '',
+			'email' => ''
+		);
+
+		if(!$this->session->userdata('form')){
+			$this->session->set_userdata('form', $form);
+	   }	
+		$this->load->view('form2');
 	}
 
 	public function logout(){

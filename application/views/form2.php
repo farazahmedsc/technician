@@ -59,7 +59,7 @@
         <div class="col-12 grid-margin stretch-card">
           <div class="card">
             <div class="card-body">
-            <h3>Form Number 1</h3> <br>
+            <h3>Form Number <?=$this->session->userdata('form')['no_of_form']?></h3> <br>
             <hr>
 
             <h3 id="form_number" style="display:none;">First Form</h3>
@@ -125,7 +125,9 @@
               <!-- <form class="forms-sample" id="formTech" method="post" action="<?php echo base_url();?>form/create"
                 enctype="multipart/form-data"> -->
                 
-
+                 <?php
+                      $loggedUser = $this->session->userdata('loggedUser');                      
+                ?>
 
               <div id="first_Form">
 
@@ -161,43 +163,52 @@
 
                     <div class="col-md-6" style="display: none;">
                       <div class="form-group">
+                        <?php
+                          if($this->session->userdata('form')['no_of_form'] ==1){
+                            $disabled = '';
+                          }else{
+                            $disabled = 'readonly';
+                          }
+                        ?>
                         <label>URL*</label>
                         <input type="text" class="form-control" name="url" placeholder="url " value="form">
+                        form number
+                        <input type="text" class="form-control" name="no_of_form" placeholder="forms Number " value="<?=$this->session->userdata('form')['no_of_form']?>">
+                        tech_id
+                        <input type="text" class="form-control" name="tech_id" placeholder="tech_id " value="<?=$loggedUser['u_id'];?>">
+
+                        <input type="text" class="form-control" name="id" placeholder="form_id " value="<?=$this->session->userdata('form')['form_id']?>">
+
                       </div>
                     </div><!-- col-md-6 End-->
 
-                    <div class="col-md-6" style="display: none;">
-                      <div class="form-group">
-                        <label>Forms Number*</label>
-                        <input type="text" class="form-control" name="no_of_form" placeholder="forms Number ">
-                      </div>
-                    </div><!-- col-md-6 End-->
+                   
 
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>Test Name*</label>
-                        <input type="text" class="form-control" name="test_name" placeholder="Test Name">
+                        <input type="text" class="form-control" name="test_name" placeholder="Test Name"  <?=$disabled?> value="<?=$this->session->userdata('form')['test_name']?>">
                       </div>
                     </div><!-- col-md-6 End-->   
 
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>Company Name*</label>
-                        <input type="text" class="form-control" name="company_name" placeholder="Company Name">
+                        <input type="text" class="form-control" name="company_name" placeholder="Company Name"  <?=$disabled?> value="<?=$this->session->userdata('form')['company_name']?>">
                       </div>
                     </div><!-- col-md-6 End-->
 
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>Site Address*</label>
-                        <input type="text" class="form-control" name="site_address" placeholder="Site Address">
+                        <input type="text" class="form-control" name="site_address" placeholder="Site Address"  <?=$disabled?> value="<?=$this->session->userdata('form')['site_address']?>">
                       </div>
                     </div><!-- col-md-6 End offset-sm-1-->
 
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>Email*</label>
-                        <input type="text" class="form-control" name="email" placeholder="Email">
+                        <input type="text" class="form-control" name="email" placeholder="Email"  <?=$disabled?> value="<?=$this->session->userdata('form')['email']?>">
                       </div>
                     </div><!-- col-md-6 End-->
 
@@ -292,7 +303,7 @@
 
 
 
-                  <form class="forms-sample" id="formTech" method="post" action="<?php echo base_url();?>form/store/pu"
+                  <form class="forms-sample" id="formPackageUnit" method="post" action="<?php echo base_url();?>Form/pu_submit"
                 enctype="multipart/form-data">
                   <!-- Package Unit 1 (2) Start -->
 
@@ -304,1034 +315,45 @@
                   </form>
 
 
-                  <!-- Central Split AC (3) Start -->
 
 
-                  <div class="row" id="centralSplit">
-                    <div class="col-md-12">
-                      <div class="headingForm">
-                        <h3>Central Split AC</h3>
-                      </div>
-                    </div>
+                  <form class="forms-sample" id="formCentralSplitAc" method="post" action="<?php echo base_url();?>Form/cs_submit"
+                enctype="multipart/form-data">
+                  <!-- Central Split AC (2) Start -->
 
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Manufacturer *</label>
-                        <input type="text" class="form-control" name="cs_manufacturer" placeholder="Manufacturer">
-                      </div>
-                    </div><!-- col-md-6 End-->
 
+                      <?php include('layout/central_split.php') ?>
 
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Model Number *</label>
-                        <input type="text" class="form-control" name="cs_model" placeholder="Model Number">
-                      </div>
-                    </div><!-- col-md-6 End-->
+                  <!-- Central Split AC (2) End -->
 
+                  </form>
 
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Serial Number *</label>
-                        <input type="text" class="form-control" name="cs_serial" placeholder="Serial Number">
-                      </div>
-                    </div><!-- col-md-6 End-->
 
+                  <form class="forms-sample" id="formHeatPump" method="post" action="<?php echo base_url();?>Form/hp_submit"
+                enctype="multipart/form-data">
+                  <!-- HEAT PUMP (2) Start -->
 
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Tonnage *</label>
-                        <select class="form-control" name="cs_tonnage">
-                          <option value="Default">Default</option>
-                          <option value="0.75">0.75</option>
-                          <option value="1">1</option>
-                          <option value="1.5">1.5</option>
-                          <option value="2">2</option>
-                          <option value="2.5">2.5</option>
-                          <option value="3">3</option>
-                          <option value="3.5">3.5</option>
-                          <option value="4">4</option>
-                          <option value="4.5">4.5</option>
-                          <option value="5">5</option>
-                        </select>
 
-                      </div>
-                    </div><!-- col-md-6 End-->
+                      <?php include('layout/heat_pump.php') ?>
 
+                  <!-- HEAT PUMP (2) End -->
 
+                  </form>
 
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Seers *</label>
-                        <select class="form-control" name="cs_seer">
-                          <option value="Default">Default</option>
-                          <option value="14">14</option>
-                          <option value="15">15</option>
-                          <option value="16">16</option>
-                          <option value="17">17</option>
-                          <option value="18">18</option>
-                        </select>
 
-                      </div>
-                    </div><!-- col-md-6 End-->
+                  <form class="forms-sample" id="formDuctlessUnit" method="post" action="<?php echo base_url();?>Form/du_submit"
+                enctype="multipart/form-data">
+                  <!-- Ductless Unit (2) Start -->
 
 
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label>Central Split AC Image</label>
-                        <input type="file" name="cs_image[]" class="file-upload-default">
-                        <div class="input-group col-xs-12">
-                          <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
-                          <span class="input-group-append">
-                            <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
-                          </span>
-                        </div>
-                      </div>
-                    </div><!-- col-md-6 End-->
+                      <?php include('layout/ductless_unit.php') ?>
 
+                  <!-- Ductless Unit (2) End -->
 
+                  </form>
 
-                    <div class="col-md-12">
-                      <button type="button" class="btn btn-primary mr-2" onclick="centralSplit_Back()">Back</button>
-                      <button type="button" class="btn btn-primary mr-2" onclick="centralSplit_Submit()">Next</button>
-                      <button type="button" class="btn btn-light float-right" onclick="centralSplit_Clear()">Clear
-                        Form</button>
 
-                    </div>
-
-                  </div>
-
-
-                  <!-- Central Split AC (3) End -->
-
-
-                  <!-- Heat Pump (4) Start -->
-
-
-                  <div class="row" id="heatPump">
-                    <div class="col-md-12">
-                      <div class="headingForm">
-                        <h3>Heat Pump</h3>
-                      </div>
-                    </div>
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Manufacturer *</label>
-                        <input type="text" class="form-control" name="heat_manufacturer" placeholder="Manufacturer">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Model Number *</label>
-                        <input type="text" class="form-control" name="heat_model" placeholder="Model Number">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Serial Number *</label>
-                        <input type="text" class="form-control" name="heat_serial" placeholder="Serial Number">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Tonnage *</label>
-                        <select class="form-control" name="heat_tonnage">
-                          <option value="Default">Default</option>
-                          <option value="0.75">0.75</option>
-                          <option value="1">1</option>
-                          <option value="1.5">1.5</option>
-                          <option value="2">2</option>
-                          <option value="2.5">2.5</option>
-                          <option value="3">3</option>
-                          <option value="3.5">3.5</option>
-                          <option value="4">4</option>
-                          <option value="4.5">4.5</option>
-                          <option value="5">5</option>
-                        </select>
-
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Seers *</label>
-                        <select class="form-control" name="heat_seer">
-                          <option value="Default">Default</option>
-                          <option value="14">14</option>
-                          <option value="15">15</option>
-                          <option value="16">16</option>
-                          <option value="17">17</option>
-                          <option value="18">18</option>
-                        </select>
-
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label>Heat Pump Image</label>
-                        <input type="file" name="heat_image[]" class="file-upload-default">
-                        <div class="input-group col-xs-12">
-                          <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
-                          <span class="input-group-append">
-                            <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
-                          </span>
-                        </div>
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-
-                    <div class="col-md-12">
-                      <button type="button" class="btn btn-primary mr-2" onclick="heatPump_Back()">Back</button>
-                      <button type="button" class="btn btn-primary mr-2" onclick="heatPump_Submit()">Next</button>
-                      <button type="button" class="btn btn-light float-right" onclick="heatPump_Clear()">Clear
-                        Form</button>
-
-                    </div>
-
-                  </div>
-
-
-                  <!-- Heat Pump (4) End -->
-
-
-
-                  <!-- Central Gas Furnace (5) Start -->
-
-                  <div class="row" id="centralGas">
-                    <div class="col-md-12">
-                      <div class="headingForm">
-                        <h3>Central Gas Furnace</h3>
-                      </div>
-                    </div>
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Manufacturer *</label>
-                        <input type="text" class="form-control" name="cg_manufacturer" placeholder="Manufacturer">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Model Number *</label>
-                        <input type="text" class="form-control" name="cg_model" placeholder="Model Number">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Serial Number *</label>
-                        <input type="text" class="form-control" name="cg_serial" placeholder="Serial Number">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>BTU Input *</label>
-                        <input type="text" class="form-control" name="cg_btu_input" placeholder="BTU Input">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>BTU Output *</label>
-                        <input type="text" class="form-control" name="cg_btu_output" placeholder="BTU Output">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Efficiency *</label>
-                        <input type="text" class="form-control" name="cg_efficiency" placeholder="Efficiency">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-                    <!-- <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-12">Full Title 24? *</label>
-                        <div class="form-check col-sm-3 offset-sm-1">
-                          <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="cg_fulltime" value="Yes">
-                            Yes
-                          </label>
-                        </div>
-
-                        <div class="form-check col-sm-3">
-                          <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="cg_fulltime" value="No">
-                            No
-                          </label>
-                        </div>
-                      </div>
-                    </div> -->
-                    <!-- col-md-6 End-->
-
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label>Central Gas Furnace Image</label>
-                        <input type="file" name="cg_image[]" class="file-upload-default">
-                        <div class="input-group col-xs-12">
-                          <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
-                          <span class="input-group-append">
-                            <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
-                          </span>
-                        </div>
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-                    <div class="col-md-12">
-                      <button type="button" class="btn btn-primary mr-2" onclick="centralGas_Back()">Back</button>
-                      <button type="button" class="btn btn-primary mr-2" onclick="centralGas_Submit()">Next</button>
-                      <button type="button" class="btn btn-light float-right" onclick="centralGas_Clear()">Clear
-                        Form</button>
-
-                    </div>
-
-                  </div>
-
-                  <!-- Central Gas Furnace (5) End -->
-
-
-
-                  <!-- AC Coil (6) Start -->
-
-                  <div class="row" id="acCoil">
-                    <div class="col-md-12">
-                      <div class="headingForm">
-                        <h3>AC Coil</h3>
-                      </div>
-                    </div>
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Manufacturer *</label>
-                        <input type="text" class="form-control" name="acc_manufacturer" placeholder="Manufacturer">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Model Number *</label>
-                        <input type="text" class="form-control" name="acc_model" placeholder="Model Number">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Serial Number *</label>
-                        <input type="text" class="form-control" name="acc_serial" placeholder="Serial Number">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label>AC Coil Image</label>
-                        <input type="file" name="acc_image[]" class="file-upload-default">
-                        <div class="input-group col-xs-12">
-                          <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
-                          <span class="input-group-append">
-                            <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
-                          </span>
-                        </div>
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-                    <div class="col-md-12">
-                      <button type="button" class="btn btn-primary mr-2" onclick="acCoil_Back()">Back</button>
-                      <button type="button" class="btn btn-primary mr-2" onclick="acCoil_Submit()">Next</button>
-                      <button type="button" class="btn btn-light float-right" onclick="acCoil_Clear()">Clear Form</button>
-
-                    </div>
-
-                  </div>
-
-                  <!-- AC Coil (6) End -->
-
-
-
-
-                  <!-- Air Handler (7) Start -->
-
-                  <div class="row" id="airHandler">
-                    <div class="col-md-12">
-                      <div class="headingForm">
-                        <h3>Air Handler</h3>
-                      </div>
-                    </div>
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Manufacturer *</label>
-                        <input type="text" class="form-control" name="air_manufacturer" placeholder="Manufacturer">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Model Number *</label>
-                        <input type="text" class="form-control" name="air_model" placeholder="Model Number">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Serial Number *</label>
-                        <input type="text" class="form-control" name="air_serial" placeholder="Serial Number">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>BTU Input *</label>
-                        <input type="text" class="form-control" name="air_btu_input" placeholder="BTU Input">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>BTU Output *</label>
-                        <input type="text" class="form-control" name="air_btu_output" placeholder="BTU Output">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Efficiency *</label>
-                        <input type="text" class="form-control" name="air_efficiency" placeholder="Efficiency">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-12">Full Title 24? *</label>
-                        <div class="form-check col-sm-3 offset-sm-1">
-                          <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="air_fulltime" value="Yes">
-                            Yes
-                          </label>
-                        </div>
-
-                        <div class="form-check col-sm-3">
-                          <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="air_fulltime" value="No">
-                            No
-                          </label>
-                        </div>
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label>Central Air Handler Image</label>
-                        <input type="file" name="air_image[]" class="file-upload-default">
-                        <div class="input-group col-xs-12">
-                          <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
-                          <span class="input-group-append">
-                            <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
-                          </span>
-                        </div>
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-
-                    <div class="col-md-12">
-                      <button type="button" class="btn btn-primary mr-2" onclick="airHandler_Back()">Back</button>
-                      <button type="button" class="btn btn-primary mr-2" onclick="airHandler_Submit()">Next</button>
-                      <button type="button" class="btn btn-light float-right" onclick="airHandler_Clear()">Clear
-                        Form</button>
-
-                    </div>
-
-                  </div>
-
-                  <!-- Central Air Handler (7) End -->
-
-                  <!--Condenser (8) Start -->
-
-                  <div class="row" id="condenser">
-                    <div class="col-md-12">
-                      <div class="headingForm">
-                        <h3>Condenser</h3>
-                      </div>
-                    </div>
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Manufacturer *</label>
-                        <input type="text" class="form-control" name="con_manufacturer" placeholder="Manufacturer">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Model Number *</label>
-                        <input type="text" class="form-control" name="con_model" placeholder="Model Number">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Serial Number *</label>
-                        <input type="text" class="form-control" name="con_serial" placeholder="Serial Number">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>BTU Input *</label>
-                        <input type="text" class="form-control" name="con_btu_input" placeholder="BTU Input">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Tonnage *</label>
-                        <select class="form-control" name="con_tonnage">
-                          <option value="Default">Default</option>
-                          <option value="0.75">0.75</option>
-                          <option value="1">1</option>
-                          <option value="1.5">1.5</option>
-                          <option value="2">2</option>
-                          <option value="2.5">2.5</option>
-                          <option value="3">3</option>
-                          <option value="3.5">3.5</option>
-                          <option value="4">4</option>
-                          <option value="4.5">4.5</option>
-                          <option value="5">5</option>
-                        </select>
-
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Seers *</label>
-                        <select class="form-control" name="con_seer">
-                          <option value="Default">Default</option>
-                          <option value="14">14</option>
-                          <option value="15">15</option>
-                          <option value="16">16</option>
-                          <option value="17">17</option>
-                          <option value="18">18</option>
-                        </select>
-
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Pounds *</label>
-                        <input type="text" class="form-control" name="in_pounds" placeholder="Pounds">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Ounces *</label>
-                        <input type="text" class="form-control" name="in_ounces" placeholder="BTU Ounces">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label>Condenser Image</label>
-                        <input type="file" name="con_image[]" class="file-upload-default">
-                        <div class="input-group col-xs-12">
-                          <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
-                          <span class="input-group-append">
-                            <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
-                          </span>
-                        </div>
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-                    <div class="col-md-12">
-                      <button type="button" class="btn btn-primary mr-2" onclick="condenser_Back()">Back</button>
-                      <button type="button" class="btn btn-primary mr-2" onclick="condenser_Submit()">Next</button>
-                      <button type="button" class="btn btn-light float-right" onclick="condenser_Clear()">Clear
-                        Form</button>
-
-                    </div>
-
-                  </div>
-
-
-
-                  <!-- Condenser (8) End -->
-
-
-                  <!--Indoor Unit (9) Start -->
-
-                  <div class="row" id="indoorUnit">
-                    <div class="col-md-12">
-                      <div class="headingForm">
-                        <h3>Indoor Unit</h3>
-                      </div>
-                    </div>
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Manufacturer *</label>
-                        <input type="text" class="form-control" name="in_manufacturer" placeholder="Manufacturer">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Model Number *</label>
-                        <input type="text" class="form-control" name="in_model" placeholder="Model Number">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Serial Number *</label>
-                        <input type="text" class="form-control" name="in_serial" placeholder="Serial Number">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>BTU Input *</label>
-                        <input type="text" class="form-control" name="in_btu_input" placeholder="BTU Input">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>BTU Output *</label>
-                        <input type="text" class="form-control" name="in_btu_output" placeholder="BTU Output">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-                    
-
-                    <div class="col-md-6">
-                      <div class="form-group row">
-                        <label class="col-sm-12">Full Title 24? *</label>
-                        <div class="form-check col-sm-3 offset-sm-1">
-                          <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="in_fulltime" value="Yes">
-                            Yes
-                          </label>
-                        </div>
-
-                        <div class="form-check col-sm-3">
-                          <label class="form-check-label">
-                            <input type="radio" class="form-check-input" name="in_fulltime" value="No">
-                            No
-                          </label>
-                        </div>
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label>Indoor Unit Image</label>
-                        <input type="file" name="in_image[]" class="file-upload-default">
-                        <div class="input-group col-xs-12">
-                          <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
-                          <span class="input-group-append">
-                            <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
-                          </span>
-                        </div>
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-
-
-
-
-                    <div class="col-md-12">
-                      <button type="button" class="btn btn-primary mr-2" onclick="indoorUnit_Back()">Back</button>
-                      <button type="button" class="btn btn-primary mr-2" onclick="indoorUnit_Submit()">Next</button>
-                      <button type="button" class="btn btn-light float-right" onclick="indoorUnit_Clear()">Clear
-                        Form</button>
-
-                    </div>
-
-                  </div>
-
-
-
-                  <!-- Indoor Unit (9) End -->
-
-
-                  <!-- Test Result 10 Start -->
-
-                  <div class="row" id="testResult">
-                    <div class="col-md-12">
-                      <div class="headingForm">
-                        <h3>Test Result</h3>
-                      </div>
-                    </div>
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Duct Leakage CFM Result</label>
-                        <input type="text" class="form-control" name="test_duct_leak_result"
-                          placeholder="Duct Leakage CFM Result">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Duct Leakage CFM *</label>
-                        <div class="row">
-                          <div class="col-md-4">
-                            <div class="form-check">
-                              <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="test_ductLeakage" value="5%">
-                                5%
-                              </label>
-                            </div>
-                          </div>
-
-                          <div class="col-md-4">
-                            <div class="form-check">
-                              <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="test_ductLeakage" value="15%_Partial">
-                                15% (Partial)
-                              </label>
-                            </div>
-                          </div>
-                          <div class="col-md-4">
-                            <div class="form-check">
-                              <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="test_ductLeakage" value="15%_System">
-                                15% (System only)
-                              </label>
-                            </div>
-                          </div>
-                          <div class="col-md-4">
-                            <div class="form-check">
-                              <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="test_ductLeakage"
-                                  value="Exempt_Asbestos">
-                                Exempt (Asbestos)
-                              </label>
-                            </div>
-                          </div>
-                          <div class="col-md-4">
-                            <div class="form-check">
-                              <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="test_ductLeakage" value="Exempt_40ft">
-                                Exempt (Less than 40ft of ducts)
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-
-
-
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Fan Watt Draw (New System Only)</label>
-                        <input type="text" class="form-control" name="test_fanWatt" placeholder="Fan Watt Draw">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <h5>Airflow CFM Result</h5>
-                        <label>CFM (Return 1) </label>
-                        <input type="text" class="form-control" name="test_cfm1" placeholder="CFM (Return 1)">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Location (Return 1) </label>
-                        <input type="text" class="form-control" name="test_location1" placeholder="Location (Return 1)">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>CFM (Return 2)</label>
-                        <input type="text" class="form-control" name="test_cfm2" placeholder="CFM (Return 2)">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Location (Return 2)</label>
-                        <input type="text" class="form-control" name="test_location2" placeholder="Location (Return 2)">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>CFM (Return 3)</label>
-                        <input type="text" class="form-control" name="test_cfm3" placeholder="CFM (Return 3)">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Location (Return 3)</label>
-                        <input type="text" class="form-control" name="test_location3" placeholder="Location (Return 3)">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>CFM (Return 4)</label>
-                        <input type="text" class="form-control" name="test_cfm4" placeholder="CFM (Return 4)">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Location (Return 4)</label>
-                        <input type="text" class="form-control" name="test_location4" placeholder="Location (Return 4)">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>CFM (Return 5)</label>
-                        <input type="text" class="form-control" name="test_cfm5" placeholder="CFM (Return 5)">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Location (Return 5)</label>
-                        <input type="text" class="form-control" name="test_location5" placeholder="Location (Return 5)">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-
-                    <div class="col-md-12">
-                      <button type="button" class="btn btn-primary mr-2" onclick="testResult_Back()">Back</button>
-
-                      <button type="button" class="btn btn-primary mr-2" onclick="testResultSubmit()">Next</button>
-                      <button type="button" class="btn btn-light float-right" onclick="testResult_Clear()">Clear
-                        Form</button>
-
-                    </div>
-
-
-
-                  </div>
-
-                  <!-- Test Result 10 End -->
-
-
-                  <!-- Refrigerant (MCH 25) 10.1 Start -->
-
-                  <div class="row" id="refrigerant">
-                    <div class="col-md-12">
-                      <div class="headingForm">
-                        <h3>Refrigerant (MCH 25)</h3>
-                      </div>
-                    </div>
-
-
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label>Refrigerant (MCH 25) Image</label>
-                        <input type="file" name="ref_image[]" class="file-upload-default">
-                        <div class="input-group col-xs-12">
-                          <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
-                          <span class="input-group-append">
-                            <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
-                          </span>
-                        </div>
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-                    <div class="col-md-12">
-                      <button type="button" class="btn btn-primary mr-2" onclick="refrigerant_Back()">Back</button>
-                      <button type="button" class="btn btn-primary mr-2" onclick="refrigerantSubmit()">Next</button>
-                    </div>
-
-                  </div>
-                  <!-- Refrigerant (MCH 25) 10.1 End -->
-
-
-
-                  <!-- Windows 10.2 Start -->
-
-                  <div class="row" id="windows">
-                    <div class="col-md-12">
-                      <div class="headingForm">
-                        <h3>Windows</h3>
-                      </div>
-                    </div>
-
-
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label>Windows Image</label>
-                        <input type="file" name="win_image[]" class="file-upload-default">
-                        <div class="input-group col-xs-12">
-                          <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
-                          <span class="input-group-append">
-                            <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
-                          </span>
-                        </div>
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-                    <div class="col-md-12">
-                      <button type="button" class="btn btn-primary mr-2" onclick="window_Back()">Back</button>
-                      <button type="button" class="btn btn-primary mr-2" onclick="windowSubmit()">Next</button>
-                    </div>
-
-                  </div>
-                  <!-- Windows 10.2 End -->
-
-
-
-                  <!-- Water Heater 10.3 Start -->
-
-                  <div class="row" id="water_heater">
-                    <div class="col-md-12">
-                      <div class="headingForm">
-                        <h3>Water Heater</h3>
-                      </div>
-                    </div>
-
-
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label>Water Heater Image</label>
-                        <input type="file" name="water_image[]" class="file-upload-default">
-                        <div class="input-group col-xs-12">
-                          <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
-                          <span class="input-group-append">
-                            <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
-                          </span>
-                        </div>
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-                    <div class="col-md-12">
-                      <button type="button" class="btn btn-primary mr-2" onclick="water_Back()">Back</button>
-                      <button type="button" class="btn btn-primary mr-2" onclick="waterSubmit()">Next</button>
-                    </div>
-
-                  </div>
-                  <!-- Water Heater 10.3 End -->
-
-
-                  <!-- Kitchen Hood 10.4 Start -->
-
-                  <div class="row" id="kitchen">
-                    <div class="col-md-12">
-                      <div class="headingForm">
-                        <h3>Kitchen Hood</h3>
-                      </div>
-                    </div>
-
-
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label>Kitchen Hood Image</label>
-                        <input type="file" name="kitchen_image[]" class="file-upload-default">
-                        <div class="input-group col-xs-12">
-                          <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
-                          <span class="input-group-append">
-                            <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
-                          </span>
-                        </div>
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-                    <div class="col-md-12">
-                      <button type="button" class="btn btn-primary mr-2" onclick="kitchen_Back()">Back</button>
-                      <button type="button" class="btn btn-primary mr-2" onclick="kitchenSubmit()">Next</button>
-                    </div>
-
-                  </div>
-                  <!-- Kitchen Hood 10.4 End -->
-
-
-                  <!-- Notes 11 Start -->
-
-                  <div class="row" id="notes">
-                    <div class="col-md-12">
-                      <div class="headingForm">
-                        <h3> Notes </h3>
-                      </div>
-                    </div>
-
-
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label>Notes</label>
-                        <input type="text" class="form-control" name="notes" placeholder="Notes">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-
-                    <div class="col-md-12">
-                      <button type="button" class="btn btn-primary mr-2" onclick="notes_Back()">Back</button>
-                      <button type="button" class="btn btn-primary mr-2" id="firstNotesSubmit" onclick="submitSend()">Submit</button>
-                      <button type="button" class="btn btn-primary mr-2" id="firstNotesNext" onclick="notes_first_end()">Move to 2nd Form</button>
-                      <button type="button" class="btn btn-light float-right" onclick="notes_Clear()">Clear Form</button>
-
-                    </div>
-
-
-                  </div>
-
-                  <!-- Notes 11 End -->
+                 
                 </div>
 
                 <!-- ================================================================================= -->
@@ -1406,17 +428,17 @@
 
 
 <script>
-    dummy_data();
-    function dummy_data(){
-        $("input[name=test_name]").val('test name');
-        $("input[name=company_name]").val('company Name');
-        $("input[name=site_address]").val('site address');
-        $("input[name=duct_location]").val("Crawl_Space");
-        $("input[name=email]").val('email@email.com');
-        $("select[name=number_of_bedroom]").val('1');
+    // dummy_data();
+    // function dummy_data(){
+    //     $("input[name=test_name]").val('test name');
+    //     $("input[name=company_name]").val('company Name');
+    //     $("input[name=site_address]").val('site address');
+    //     $("input[name=duct_location]").val("Crawl_Space");
+    //     $("input[name=email]").val('email@email.com');
+    //     $("select[name=number_of_bedroom]").val('1');
 
 
-    }
+    // }
     var unit_type = '';
     var fulltime = '';
     function unitType(v){
@@ -1424,62 +446,7 @@
       $("#unitType").hide();
       $("#initialForm").show();
     }
-  function no_of_system(){
-    v = $("select[name=no_of_system] option:selected").val() 
-    localStorage.setItem("no_of_system", v);   
-    $("input[name=no_of_form]").val(v);
-    
-  $("#ask_no_of_system").hide();
-    $("#form_number").show();
-    $("#initialForm").show();
-    if(v == '1'){
-      $("#firstNotesNext").hide();
-      $("#firstNotesSubmit");
-    }else if(v=='2'){
-      $("#firstNotesSubmit").hide();
-      $("#secondNotesNext").hide();
-
-    }else{
-      $("#firstNotesSubmit").hide();
-      $("#secondNotesSubmit").hide();
-      
-    }   
-  }
-
-  function notes_first_end(){
-
-    $("#form_number").html("Second Form "); 
-    $("#hersTitle").html("Hers Title ");
-
-    $("#first_Form").hide()
-    $("#second_Form").show();
-
-
-    $("input[name=second_test_name]").val($("input[name=test_name]").val());
-    $("input[name=second_company_name]").val($("input[name=company_name]").val());
-    $("input[name=second_site_address]").val($("input[name=site_address]").val());
-    $("input[name=second_email]").val($("input[name=email]").val());
-
-    
-  }
-
-  function notes_second_end(){
-    $("#form_number").html("Third Form "); 
-    $("#hersTitle").html("Hers Title ");
-
-    $("#second_Form").hide();
-    $("#third_Form").show();    
-
-
-    $("input[name=third_test_name]").val($("input[name=test_name]").val());
-    $("input[name=third_company_name]").val($("input[name=company_name]").val());
-    $("input[name=third_site_address]").val($("input[name=site_address]").val());
-    $("input[name=third_email]").val($("input[name=email]").val());
-
-  }
-
-
-
+ 
 
   function submitSend(){
     $(".loader").css("display","flex");
@@ -1493,27 +460,29 @@
 
 
 
-
-    
-    unit_type = "";
     hideAll()
     function hideAll() {
-      $("#packageUnit1").hide();
-      $("#packageUnit_btn").hide();
-      $("#centralSplit").hide();
-      $("#heatPump").hide();
-      $("#centralGas").hide();
-      $("#acCoil").hide();
-      $("#airHandler").hide();
-      $("#condenser").hide();
-      $("#indoorUnit").hide();
-      $("#testResult").hide();
-      $("#refrigerant").hide();
-      $("#windows").hide();
-      $("#water_heater").hide();
-      $("#kitchen").hide();
-      $("#notes").hide();
       $("#initialForm").hide();
+      $("#formPackageUnit").hide();
+      $("#formCentralSplitAc").hide();
+      $("#formHeatPump").hide();
+      $("#formDuctlessUnit").hide();
+      // $("#packageUnit1").hide();
+      // $("#packageUnit_btn").hide();
+      // $("#centralSplit").hide();
+      // $("#heatPump").hide();
+      // $("#centralGas").hide();
+      // $("#acCoil").hide();
+      // $("#airHandler").hide();
+      // $("#condenser").hide();
+      // $("#indoorUnit").hide();
+      // $("#testResult").hide();
+      // $("#refrigerant").hide();
+      // $("#windows").hide();
+      // $("#water_heater").hide();
+      // $("#kitchen").hide();
+      // $("#notes").hide();
+      // 
 
     }
     //First Initial Form
@@ -1533,32 +502,70 @@
       $("select[name=number_of_bedroom] option:selected").val() == "Default" ? allow = false : nothing = true;
       $("input[name=fulltime]").is(":checked") ? nothing = true : allow = false;
 
-      if (unit_type == "Package_Unit" && allow) {
+      if (unit_type == "Package Unit" && allow) {
         $("#packageUnit1").show();
         $("#packageUnit_btn").show();
-        fillInitialForm('pu');
+        $("#formPackageUnit").show();
+
+        $("#putestResult").hide();
+        $("#pufulltime_yes").hide();
+        $("#punotes").hide();
+
+        fillInitialForm('pu_');
         
         $("#hersTitle").append(" > Package Unit");
 
-      } else if (unit_type == "Central_Split_AC" && allow) {
-        // $("#centralSplit").show();
-        // $("#hersTitle").append(" > Central Split AC");
+      } else if (unit_type == "Central Split AC" && allow) {
+
 
         $("#centralGas").show();
+        $("#centralGas_btn").show();
+        $("#formCentralSplitAc").show();
+
+        
+
+        $("#centralSplit").hide();
+        $("#centralSplit_btn").hide();
+        $("#acCoil").hide();
+        $("#acCoil_btn").hide();
+        $("#csfulltime_yes").hide();
+        $("#cstestResult").hide();
+        $("#csnotes").hide();
+        
+
+        fillInitialForm('cs_');
         $("#hersTitle").append(" > Central Gas Furnace");
         
 
-      } else if (unit_type == "Heat_Pump" && allow) {
-        // $("#heatPump").show();
-        // $("#hersTitle").append(" > Heat Pump");
+      } else if (unit_type == "Heat Pump" && allow) {
 
+        $("#formHeatPump").show();
         $("#airHandler").show();
+        $("#airHandler_btn").show();
+
+        $("#hpacCoil").hide();
+        $("#hpacCoil_btn").hide();
+        $("#heatPump").hide();
+        $("#heatPump_btn").hide();
+        $("#hptestResult").hide();
+        $("#hpfulltime_yes").hide();
+        $("#hpnotes").hide();
+      
+        
+        fillInitialForm('hp_');
         $("#hersTitle").append(" > Air Handler");
 
-      } else if (unit_type == "Ductless_Unit" && allow) {
-        // $("#condenser").show();
-        // $("#hersTitle").append(" > Condenser");
+      } else if (unit_type == "Ductless Unit" && allow) {
+
+        $("#formDuctlessUnit").show();
         $("#indoorUnit").show();
+        $("#indoorUnit_btn").show();
+
+        $("#condenser").hide();
+        $("#condenser_btn").hide();
+        $("#dufulltime_yes").hide();
+        $("#dunotes").hide();
+       
         $("#hersTitle").append(" > Indoor Unit");
 
       } else {
@@ -1569,41 +576,43 @@
     }
 
     function fillInitialForm(p){
-      $(`input[name=${p}url]`).val($("input[name=url]").val());
-      $(`input[name=${p}no_of_form]`).val($("input[name=no_of_form]").val());
-      $(`input[name=${p}test_name]`).val($("input[name=test_name]").val());
-      $(`input[name=${p}company_name]`).val($("input[name=company_name]").val());
-      $(`input[name=${p}site_address]`).val($("input[name=site_address]").val());
-      $(`input[name=${p}email]`).val($("input[name=email]").val());
-      $(`input[name=${p}duct_location]`).val($("input[name=duct_location]").val());
-      $(`input[name=${p}number_of_bedroom]`).val( $("select[name=number_of_bedroom] option:selected").val());
-      $(`input[name=${p}url]`).val($("input[name=url]").val());
-      $(`input[name=${p}url]`).val($("input[name=url]").val());
+      $("input[name="+p+"url]").val($("input[name=url]").val());
+      $("input[name="+p+"no_of_form]").val($("input[name=no_of_form]").val());
+      $("input[name="+p+"tech_id]").val($("input[name=tech_id]").val());
+      $("input[name="+p+"id]").val($("input[name=id]").val());
+      $("input[name="+p+"test_name]").val($("input[name=test_name]").val());
+      $("input[name="+p+"company_name]").val($("input[name=company_name]").val());
+      $("input[name="+p+"site_address]").val($("input[name=site_address]").val());
+      $("input[name="+p+"email]").val($("input[name=email]").val());
+      $("input[name="+p+"duct_location]").val($("input[name=duct_location]").val());
+      $("input[name="+p+"number_of_bedroom]").val( $("select[name=number_of_bedroom] option:selected").val());
+      $("input[name="+p+"fulltime]").val( $("input[name=fulltime]").val());
 
     }
 
+    /* =====================================================
+                PACKAGE UNIT
+    ======================================================== */
 
-    // (2)
+    // 
     function packageUnit1_Submit() {
       allow = true;
-    //   fulltime = $("input[name=pu_fulltime]:checked").val();
-    //   localStorage.setItem('fulltime', fulltime);
 
-    //   $("input[name=pu_fulltime]").is(":checked") ? nothing = true : allow = false;
-      $("input[name^=pu_manufacturer]").val() == '' ? allow = false : nothing = true;
-      $("input[name^=pu_model]").val() == '' ? allow = false : nothing = true;
-      $("input[name^=pu_serial]").val() == '' ? allow = false : nothing = true;
-      $("input[name^=pu_btu_input]").val() == '' ? allow = false : nothing = true;
-      $("input[name^=pu_btu_output]").val() == '' ? allow = false : nothing = true;
-      $("input[name^=pu_efficiency]").val() == '' ? allow = false : nothing = true;
-      $("select[name^=pu_tonnage] option:selected").val() == "Default" ? allow = false : nothing = true;
-      $("select[name^=pu_seer] option:selected").val() == "Default" ? allow = false : nothing = true;
-
+    $('input[name="pu_manufacturer[]"]').each(function() { $(this).val() == '' ? allow = false : nothing = true; });
+    $('input[name="pu_model[]"]').each(function() { $(this).val() == '' ? allow = false : nothing = true; });
+    $('input[name="pu_serial[]"]').each(function() { $(this).val() == '' ? allow = false : nothing = true; });
+    $('input[name="pu_btu_input[]"]').each(function() { $(this).val() == '' ? allow = false : nothing = true; });
+    $('input[name="pu_btu_output[]"]').each(function() { $(this).val() == '' ? allow = false : nothing = true; });
+    $('input[name="pu_efficiency[]"]').each(function() { $(this).val() == '' ? allow = false : nothing = true; });
+    $('select[name="pu_tonnage[]"]').each(function() { $(this).val() == 'Default' ? allow = false : nothing = true; });
+    $('select[name="pu_seer[]"]').each(function() { $(this).val() == 'Default' ? allow = false : nothing = true; });
+      
+      
       if (allow) {
         $("#packageUnit1").hide();
         $("#packageUnit_btn").hide();
         
-        $("#testResult").show();
+        $("#putestResult").show();
         $("#hersTitle").append(" > Test Result");
       } else {
         alert("Kindly fill all the fields");
@@ -1619,254 +628,128 @@
     }
 
     function packageUnit_addMore(){
-       let pul= $("#packageUnitLength").val();
-        pul++;
-        $("#packageUnitLength").val(pul);
-
-        $("#packageUnit1").append(`
-        <div class="row" id="pu${pul}">
-                    <div class="col-md-12">
-                      <div class="headingForm mt-3">
-                        <h3>Package Unit (${pul})</h3>
-                      </div>
-                    </div>
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Manufacturer *</label>
-                        <input type="text" class="form-control" name="pu_manufacturer${pul}" placeholder="Manufacturer">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Model Number *</label>
-                        <input type="text" class="form-control" name="pu_model${pul}" placeholder="Model Number">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Serial Number *</label>
-                        <input type="text" class="form-control" name="pu_serial${pul}" placeholder="Serial Number">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>BTU Input *</label>
-                        <input type="text" class="form-control" name="pu_btu_input${pul}" placeholder="BTU Input">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>BTU Output *</label>
-                        <input type="text" class="form-control" name="pu_btu_output${pul}" placeholder="BTU Output">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Efficiency *</label>
-                        <input type="text" class="form-control" name="pu_efficiency${pul}" placeholder="Efficiency">
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Tonnage *</label>
-                        <select class="form-control" name="pu_tonnage${pul}">
-                          <option value="Default">Default</option>
-                          <option value="0.75">0.75</option>
-                          <option value="1">1</option>
-                          <option value="1.5">1.5</option>
-                          <option value="2">2</option>
-                          <option value="2.5">2.5</option>
-                          <option value="3">3</option>
-                          <option value="3.5">3.5</option>
-                          <option value="4">4</option>
-                          <option value="4.5">4.5</option>
-                          <option value="5">5</option>
-                        </select>
-
-                      </div>
-                    </div><!-- col-md-6 End-->
-
-
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Seers *</label>
-                        <select class="form-control" name="pu_seer${pul}">
-                          <option value="Default">Default</option>
-                          <option value="14">14</option>
-                          <option value="15">15</option>
-                          <option value="16">16</option>
-                          <option value="17">17</option>
-                          <option value="18">18</option>
-                        </select>
-
-                      </div>
-                    </div><!-- col-md-6 End-->               
-
-
-
-
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label>Package Unit Image</label>
-                        <input type="file" name="pu_image${pul}[]" class="file-upload-default">
-                        <div class="input-group col-xs-12">
-                          <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
-                          <span class="input-group-append">
-                            <button class="file-upload-browse btn btn-primary" type="button">Upload</button>
-                          </span>
-                        </div>
-                      </div>
-                    </div><!-- col-md-6 End-->                    
-
-                  </div>
-        `);
-
+      // $( ".pu_clone" ).clone().appendTo( "#packageUnit1" );
+      $( ".pu_clone:first" ).clone().appendTo( "#packageUnit1" );
+      $("#packageUnit1 .pu_clone:last input").val('');
+      $("#packageUnit1 .pu_clone:last select").val('Default');
+      $("#packageUnit1 .pu_clone:last input[name='pu_image1[]']").attr("name", "pu_image"+ $("#packageUnit1 .pu_clone").length+"[]" );
+      $("#packageUnit1 .pu_clone:last .file-upload-browse").attr("onclick",  "pu_image_click('pu_image"+$("#packageUnit1 .pu_clone").length+"')" );
 
     }
-
     function packageUnit_lessOne(){
-        let pul= $("#packageUnitLength").val();
-        if(pul != 1){
-            $("#packageUnit"+pul).remove();
-            pul--;
-            $("#packageUnitLength").val(pul);
-        }
-        
-        // $("#packageUnitLength").val(pul);
-
+      $("#packageUnit1 .pu_clone:last").remove();
     }
 
-    // (3)
-    function centralSplit_Submit() {
-      allow = true;
-
-      fulltime = localStorage.getItem('fulltime');
-
-      $("input[name=cs_manufacturer]").val() == '' ? allow = false : nothing = true;
-      $("input[name=cs_model]").val() == '' ? allow = false : nothing = true;
-      $("input[name=cs_serial]").val() == '' ? allow = false : nothing = true;
-      $("select[name=cs_tonnage] option:selected").val() == "Default" ? allow = false : nothing = true;
-      $("select[name=cs_seer] option:selected").val() == "Default" ? allow = false : nothing = true;
-
-
-      if (allow) {
-        $("#centralSplit").hide();
-        if (fulltime == 'Yes') {
-          $("#acCoil").show();
-          $("#hersTitle").append(" > acCoil");
-        } else {
-          $("#testResult").show();
-          $("#hersTitle").append(" > Test Result");
-        }
-
-        // $("#centralGas").show();
-        // $("#hersTitle").append(" > Central Gas Furnace");
-      } else {
-        alert("Kindly fill all the fields");
-      }
+    function pu_image_click(p){
+      if(p != 'pu_image1'){
+        $(`input[name='${p}[]']`).click();
+      }      
     }
 
-    function centralSplit_Back() {
-      $("#centralSplit").hide();
-      // $("#initialForm").show();
-      $("#centralGas").show();
-      oneBack();
-    }
+    // Test Result
 
-
-
-    // (4)
-    function heatPump_Submit() {
+    function putestResultSubmit() {
       allow = true;
 
 
-      fulltime = localStorage.getItem('fulltime');
-
-      $("input[name=heat_manufacturer]").val() == '' ? allow = false : nothing = true;
-      $("input[name=heat_model]").val() == '' ? allow = false : nothing = true;
-      $("input[name=heat_serial]").val() == '' ? allow = false : nothing = true;
-      $("select[name=heat_tonnage] option:selected").val() == "Default" ? allow = false : nothing = true;
-      $("select[name=heat_seer] option:selected").val() == "Default" ? allow = false : nothing = true;
+      $("input[name=putest_ductLeakage]").is(":checked") ? nothing = true : allow = false;
 
 
-      if (allow) {
-        $("#heatPump").hide();
+      if (unit_type == "Package Unit" && allow) {
 
-        // $("#testResult").show();
-        // $("#hersTitle").append(" > Test Result");
+        if (fulltime == "Yes") {
+          $("#putestResult").hide();
+          $("#pufulltime_yes").show();
+          $("#hersTitle").append(" > Fulltime");
 
-        if (fulltime == 'Yes') {
-          $("#acCoil").show();
-          $("#hersTitle").append(" > acCoil");
         } else {
-          $("#testResult").show();
-          $("#hersTitle").append(" > Test Result");
+          $("#putestResult").hide();
+          $("#punotes").show();
+          $("#hersTitle").append(" > Notes");
         }
-
-
-        // $("#airHandler").show();
-        // $("#hersTitle").append(" > Air Handler");
-      } else {
-        alert("Kindly fill all the fields");
       }
+
+
     }
 
-    function heatPump_Back() {
-      $("#heatPump").hide();
-      // $("#initialForm").show();
-      $("#airHandler").show();
+    function putestResult_Back() {
       
+      if (unit_type == "Package Unit") {
+        $("#packageUnit1").show();
+        $("#packageUnit_btn").show();
+        
+      } 
+      $("#putestResult").hide();
       oneBack();
     }
 
 
-    // (5)
+
+    // (10.1)
+
+    function pufulltime_Submit() {
+      $("#pufulltime_yes").hide();
+      $("#punotes").show();
+        $("#hersTitle").append(" > Notes");
+
+    
+
+    }
+
+    function pufulltime_Back() {
+      $("#pufulltime_yes").hide();
+      $("#putestResult").show();
+      oneBack();
+    }
+
+    
+
+    //  (11)
+    function punotes_Back() {
+      $("#putestResult").show();
+      $("#punotes").hide();
+   
+      oneBack();
+    }
+
+    function pusubmitSend(){
+      $(".loader").css("display","flex");
+      $("input[name=pu_submit]").val('Submit');
+      $("#pusubmit").click();
+    }
+
+    function punew_form(){
+      $(".loader").css("display","flex");
+      $("#pusubmit").click();
+    }
+
+
+    /* =====================================================
+                      CENTRAL SPLIT
+    ======================================================== */
+
+
+
     function centralGas_Submit() {
       allow = true;
 
-      fulltime = $("input[name=cg_fulltime]:checked").val();
-      localStorage.setItem('fulltime', fulltime);
+      $('input[name="cg_manufacturer[]"]').each(function() { $(this).val() == '' ? allow = false : nothing = true; });
+      $('input[name="cg_model[]"]').each(function() { $(this).val() == '' ? allow = false : nothing = true; });
+      $('input[name="cg_serial[]"]').each(function() { $(this).val() == '' ? allow = false : nothing = true; });
+      $('input[name="cg_btu_input[]"]').each(function() { $(this).val() == '' ? allow = false : nothing = true; });
+      $('input[name="cg_btu_output[]"]').each(function() { $(this).val() == '' ? allow = false : nothing = true; });
+      $('input[name="cg_efficiency[]"]').each(function() { $(this).val() == '' ? allow = false : nothing = true; });
+      $('input[name="cg_fulltime[]"]').each(function() { $(this).val() == '' ? allow = false : nothing = true; });
 
-
-
-
-      $("input[name=cg_manufacturer]").val() == '' ? allow = false : nothing = true;
-      $("input[name=cg_model]").val() == '' ? allow = false : nothing = true;
-      $("input[name=cg_serial]").val() == '' ? allow = false : nothing = true;
-      $("input[name=cg_btu_input]").val() == '' ? allow = false : nothing = true;
-      $("input[name=cg_btu_output]").val() == '' ? allow = false : nothing = true;
-      $("input[name=cg_efficiency]").val() == '' ? allow = false : nothing = true;
-      $("input[name=cg_fulltime]").is(":checked") ? nothing = true : allow = false;
 
       if (allow) {
         $("#centralGas").hide();
+        $("#centralGas_btn").hide();
 
         $("#centralSplit").show();
+        $("#centralSplit_btn").show();
         $("#hersTitle").append(" > Central Split AC");
-
-
-        // if (fulltime == 'Yes') {
-        //   $("#acCoil").show();
-        //   $("#hersTitle").append(" > acCoil");
-        // } else {
-        //   $("#testResult").show();
-        //   $("#hersTitle").append(" > Test Result");
-        // }
+      
       } else {
         alert("Kindly fill all the fields");
       }
@@ -1874,24 +757,102 @@
 
     function centralGas_Back() {
       $("#centralGas").hide();
-      // $("#centralSplit").show();
-      // oneBack();
+      $("#centralGas_btn").hide();
       $("#initialForm").show();      
       oneBack();
     }
 
-    // (6)
+    function centralGas_addMore(){
+      $( ".cg_clone:first" ).clone().appendTo( "#centralGas" );
+      $("#centralGas .cg_clone:last input").val('');
+      // $("#centralGas .cg_clone:last select").val('Default');
+      $("#centralGas .cg_clone:last input[name='cg_image1[]']").attr("name", "cg_image"+ $("#centralGas .cg_clone").length+"[]" );
+      $("#centralGas .cg_clone:last .file-upload-browse").attr("onclick",  "cg_image_click('cg_image"+$("#centralGas .cg_clone").length+"')" );
+
+    }
+    function centralGas_lessOne(){
+      $("#centralGas .cg_clone:last").remove();
+    }
+
+    function cg_image_click(p){
+      if(p != 'cg_image1'){
+        $(`input[name='${p}[]']`).click();
+      }      
+    }
+
+
+
+
+
+    function centralSplit_Submit() {
+      allow = true;
+
+
+      $('input[name="cs_manufacturer[]"]').each(function() { $(this).val() == '' ? allow = false : nothing = true; });
+      $('input[name="cs_model[]"]').each(function() { $(this).val() == '' ? allow = false : nothing = true; });
+      $('input[name="cs_model[]"]').each(function() { $(this).val() == '' ? allow = false : nothing = true; });
+      $('select[name="cs_tonnage[]"]').each(function() { $(this).val() == 'Default' ? allow = false : nothing = true; });
+      $('select[name="cs_seer[]"]').each(function() { $(this).val() == 'Default' ? allow = false : nothing = true; });
+     
+
+      if (allow) {
+        $("#centralSplit").hide();
+        $("#centralSplit_btn").hide();
+
+        if (fulltime == 'Yes') {
+          $("#acCoil").show();
+          $("#acCoil_btn").show();
+          $("#hersTitle").append(" > acCoil");
+        } else {
+          $("#cstestResult").show();
+          $("#hersTitle").append(" > Test Result");
+        }
+
+      } else {
+        alert("Kindly fill all the fields");
+      }
+    }
+
+    function centralSplit_Back() {
+      $("#centralSplit").hide();
+      $("#centralGas").show();
+      oneBack();
+    }
+
+    function centralSplit_addMore(){
+      $( ".cs_clone:first" ).clone().appendTo( "#centralSplit" );
+      $("#centralSplit .cs_clone:last input").val('');
+      $("#centralSplit .cs_clone:last select").val('Default');
+      $("#centralSplit .cs_clone:last input[name='cs_image1[]']").attr("name", "cs_image"+ $("#centralSplit .cs_clone").length+"[]" );
+      $("#centralSplit .cs_clone:last .file-upload-browse").attr("onclick",  "cs_image_click('cs_image"+$("#centralSplit .cs_clone").length+"')" );
+
+    }
+    function centralSplit_lessOne(){
+      $("#centralSplit .cs_clone:last").remove();
+    }
+
+    function cs_image_click(p){
+      if(p != 'cs_image1'){
+        $(`input[name='${p}[]']`).click();
+      }      
+    }
+
     function acCoil_Submit() {
       allow = true;
 
-      $("input[name=acc_manufacturer]").val() == '' ? allow = false : nothing = true;
-      $("input[name=acc_model]").val() == '' ? allow = false : nothing = true;
-      $("input[name=acc_serial]").val() == '' ? allow = false : nothing = true;
+      $('input[name="acc_manufacturer[]"]').each(function() { $(this).val() == '' ? allow = false : nothing = true; });
+      $('input[name="acc_model[]"]').each(function() { $(this).val() == '' ? allow = false : nothing = true; });
+      $('input[name="acc_serial[]"]').each(function() { $(this).val() == '' ? allow = false : nothing = true; });
 
       if (allow) {
         $("#acCoil").hide();
-        $("#testResult").show();
-        $("#hersTitle").append(" > Test Result");
+        $("#acCoil_btn").hide();
+
+        $("#csfulltime_yes").show();
+        $("#hersTitle").append(" > Images");
+        
+        // $("#cstestResult").show();
+        // $("#hersTitle").append(" > Test Result");
       } else {
         alert("Kindly fill all the fields");
       }
@@ -1901,34 +862,113 @@
       $("#acCoil").hide();
       
       $("#centralSplit").show();
-      // $("#centralGas").show();
+      $("#centralSplit_btn").show();
+      oneBack();
+    }
+
+    function acCoil_addMore(){
+      $( ".ac_clone:first" ).clone().appendTo( "#acCoil" );
+      $("#acCoil .ac_clone:last input").val('');
+      $("#acCoil .ac_clone:last select").val('Default');
+      $("#acCoil .ac_clone:last input[name='acc_image1[]']").attr("name", "acc_image"+ $("#acCoil .ac_clone").length+"[]" );
+      $("#acCoil .ac_clone:last .file-upload-browse").attr("onclick",  "ac_image_click('acc_image"+$("#acCoil .ac_clone").length+"')" );
+
+    }
+    function acCoil_lessOne(){
+      $("#acCoil .ac_clone:last").remove();
+    }
+
+    function ac_image_click(p){
+      if(p != 'acc_image1'){
+        $(`input[name='${p}[]']`).click();
+      }      
+    }
+
+    function csfulltime_Submit(){
+        $("#csfulltime_yes").hide();
+        $("#cstestResult").show();
+        $("#hersTitle").append(" > Test Result");
+    }
+
+    function csfulltime_Back(){
+      $("#csfulltime_yes").hide();
+      $("#centralSplit").show();
+      $("#centralSplit_btn").show();
+      oneBack();
+    }
+
+
+    function cstestResultSubmit() {
+      allow = true;
+
+
+      $("input[name=cstest_ductLeakage]").is(":checked") ? nothing = true : allow = false;
+
+      if(allow){
+          $("#cstestResult").hide();
+          $("#csnotes").show();
+          $("#hersTitle").append(" > Notes");
+      }
+       
+
+    }
+
+    function cstestResult_Back() {
+      
+        $("#centralSplit").show();
+        $("#centralSplit_btn").show();
+        
+      
+      $("#cstestResult").hide();
       oneBack();
     }
 
 
 
-    // (7)
+    function csnotes_Back() {
+      $("#cstestResult").show();
+      $("#csnotes").hide();
+   
+      oneBack();
+    }
+
+    function cssubmitSend(){
+      $(".loader").css("display","flex");
+      $("input[name=cs_submit]").val('Submit');
+      $("#cssubmit").click();
+    }
+
+    function csnew_form(){
+      $(".loader").css("display","flex");
+      $("#cssubmit").click();
+    }
+
+
+    /* =====================================================
+                      HEAT PUMP
+    ======================================================== */
+
+
     function airHandler_Submit() {
       allow = true;
 
 
-      fulltime = $("input[name=air_fulltime]:checked").val();
-      localStorage.setItem('fulltime', fulltime);
+      $('input[name="air_fulltime[]"]').each(function() { $(this).val() == '' ? allow = false : nothing = true; });
+      $('input[name="air_manufacturer[]"]').each(function() { $(this).val() == '' ? allow = false : nothing = true; });
+      $('input[name="air_model[]"]').each(function() { $(this).val() == '' ? allow = false : nothing = true; });
+      $('input[name="air_serial[]"]').each(function() { $(this).val() == '' ? allow = false : nothing = true; });
+      $('input[name="air_btu_input[]"]').each(function() { $(this).val() == '' ? allow = false : nothing = true; });
+      $('input[name="air_btu_output[]"]').each(function() { $(this).val() == '' ? allow = false : nothing = true; });
+      $('input[name="air_efficiency[]"]').each(function() { $(this).val() == '' ? allow = false : nothing = true; });
 
-      $("input[name=air_fulltime]").is(":checked") ? nothing = true : allow = false;
-      $("input[name=air_manufacturer]").val() == '' ? allow = false : nothing = true;
-      $("input[name=air_model]").val() == '' ? allow = false : nothing = true;
-      $("input[name=air_serial]").val() == '' ? allow = false : nothing = true;
-      $("input[name=air_btu_input]").val() == '' ? allow = false : nothing = true;
-      $("input[name=air_btu_output]").val() == '' ? allow = false : nothing = true;
-      $("input[name=air_efficiency]").val() == '' ? allow = false : nothing = true;
 
       if (allow) {
         $("#airHandler").hide();
-        // $("#testResult").show();
-        // $("#hersTitle").append(" > Test Result");
+        $("#airHandler_btn").hide();
+
 
         $("#heatPump").show();
+        $("#heatPump_btn").show();
         $("#hersTitle").append(" > Heat Pump");
         
 
@@ -1939,104 +979,218 @@
 
     function airHandler_Back() {
       $("#airHandler").hide();
+      $("#airHandler_btn").hide();
 
       $("#initialForm").show();
-      // $("#heatPump").show();
       oneBack();
     }
 
+    function airHandler_addMore(){
+      $( ".ah_clone:first" ).clone().appendTo( "#airHandler" );
+      $("#airHandler .ah_clone:last input").val('');
+      // $("#airHandler .ah_clone:last select").val('Default');
+      $("#airHandler .ah_clone:last input[name='air_image1[]']").attr("name", "air_image"+ $("#airHandler .ah_clone").length+"[]" );
+      $("#airHandler .ah_clone:last .file-upload-browse").attr("onclick",  "air_image_click('air_image"+$("#airHandler .ah_clone").length+"')" );
 
-    // (8)
-    function condenser_Submit() {
+    }
+    function airHandler_lessOne(){
+      $("#airHandler .ah_clone:last").remove();
+    }
+
+    function air_image_click(p){
+      if(p != 'air_image1'){
+        $(`input[name='${p}[]']`).click();
+      }      
+    }
+
+
+    function heatPump_Submit() {
       allow = true;
 
-      fulltime = localStorage.getItem('fulltime');
-      $("input[name=con_manufacturer]").val() == '' ? allow = false : nothing = true;
-      $("input[name=con_model]").val() == '' ? allow = false : nothing = true;
-      $("input[name=con_serial]").val() == '' ? allow = false : nothing = true;
-      $("input[name=con_btu_input]").val() == '' ? allow = false : nothing = true;
-      $("select[name=con_tonnage] option:selected").val() == "Default" ? allow = false : nothing = true;
-      $("select[name=con_seer] option:selected").val() == "Default" ? allow = false : nothing = true;
-      $("input[name=in_pounds]").val() == '' ? allow = false : nothing = true;
-      $("input[name=in_ounces]").val() == '' ? allow = false : nothing = true;
+
+      $('input[name="heat_manufacturer[]"]').each(function() { $(this).val() == '' ? allow = false : nothing = true; });
+      $('input[name="heat_model[]"]').each(function() { $(this).val() == '' ? allow = false : nothing = true; });
+      $('input[name="heat_serial[]"]').each(function() { $(this).val() == '' ? allow = false : nothing = true; });
+      $('select[name="heat_tonnage[]"]').each(function() { $(this).val() == 'Default' ? allow = false : nothing = true; });
+      $('select[name="heat_seer[]"]').each(function() { $(this).val() == 'Default' ? allow = false : nothing = true; });
 
 
       if (allow) {
+        $("#heatPump").hide();
+        $("#heatPump_btn").hide();
 
-        if (fulltime == "Yes") {
-          $("#condenser").hide();
-          $("#windows").show();
-          $("#hersTitle").append(" > Windows");
+        if (fulltime == 'Yes') {
+          $("#hpacCoil").show();
+          $("#hpacCoil_btn").show();
 
-        }else{
-          $("#condenser").hide();
-          // $("#notes").show();
-          // $("#hersTitle").append(" > Notes");
-          $("#notes").show();
-          $("#hersTitle").append(" > Notes");
-
+          $("#hersTitle").append(" > acCoil");
+        } else {
+          $("#hptestResult").show();
+          $("#hersTitle").append(" > Test Result");
         }
 
-
-        // $("#condenser").hide();
-        // // $("#indoorUnit").show();
-        // // $("#hersTitle").append(" > Indoor Unit");
-        // $("#notes").show();
-        // $("#hersTitle").append(" > Notes");
-        
       } else {
         alert("Kindly fill all the fields");
       }
     }
 
-    function condenser_Back() {
-
-      $("#condenser").hide();
-      $("#indoorUnit").show();
-      // $("#initialForm").show();
+    function heatPump_Back() {
+      $("#heatPump").hide();
+      $("#heatPump_btn").hide();
+      $("#airHandler").show();
+      $("#airHandler_btn").show();
       oneBack();
     }
 
-    // (9)
+    function heatPump_addMore(){
+      $( ".hp_clone:first" ).clone().appendTo( "#heatPump" );
+      $("#heatPump .hp_clone:last input").val('');
+      // $("#airHandler .ah_clone:last select").val('Default');
+      $("#heatPump .hp_clone:last input[name='heat_image1[]']").attr("name", "heat_image"+ $("#heatPump .hp_clone").length+"[]" );
+      $("#heatPump .hp_clone:last .file-upload-browse").attr("onclick",  "heat_image_click('heat_image"+$("#heatPump .hp_clone").length+"')" );
+
+    }
+    function heatPump_lessOne(){
+      $("#heatPump .hp_clone:last").remove();
+    }
+
+    function heat_image_click(p){
+      if(p != 'heat_image1'){
+        $(`input[name='${p}[]']`).click();
+      }      
+    }
+
+
+    function hpacCoil_Submit() {
+      allow = true;
+
+      $('input[name="hpacc_manufacturer[]"]').each(function() { $(this).val() == '' ? allow = false : nothing = true; });
+      $('input[name="hpacc_model[]"]').each(function() { $(this).val() == '' ? allow = false : nothing = true; });
+      $('input[name="hpacc_serial[]"]').each(function() { $(this).val() == '' ? allow = false : nothing = true; });
+
+      if (allow) {
+        $("#hpacCoil").hide();
+        $("#hpacCoil_btn").hide();
+
+        $("#hpfulltime_yes").show();
+        $("#hersTitle").append(" > Images");
+
+      } else {
+        alert("Kindly fill all the fields");
+      }
+    }
+
+    function hpacCoil_Back() {
+      $("#acCoil").hide();
+      $("#hpacCoil_btn").hide();
+      
+      $("#heatPump").show();
+      $("#heatPump_btn").show();
+      oneBack();
+    }
+
+    function hpacCoil_addMore(){
+      $( ".hpac_clone:first" ).clone().appendTo( "#hpacCoil" );
+      $("#hpacCoil .hpac_clone:last input").val('');
+      $("#hpacCoil .hpac_clone:last select").val('Default');
+      $("#hpacCoil .hpac_clone:last input[name='hpacc_image1[]']").attr("name", "hpacc_image"+ $("#hpacCoil .hpac_clone").length+"[]" );
+      $("#hpacCoil .hpac_clone:last .file-upload-browse").attr("onclick",  "hpac_image_click('hpacc_image"+$("#hpacCoil .hpac_clone").length+"')" );
+
+    }
+    function hpacCoil_lessOne(){
+      $("#hpacCoil .hpac_clone:last").remove();
+    }
+
+    function hpac_image_click(p){
+      if(p != 'hpacc_image1'){
+        $(`input[name='${p}[]']`).click();
+      }      
+    }
+
+
+
+
+    function hpfulltime_Submit(){
+        $("#hpfulltime_yes").hide();
+        $("#hptestResult").show();
+        $("#hersTitle").append(" > Test Result");
+    }
+
+    function hpfulltime_Back(){
+      $("#hpfulltime_yes").hide();
+      $("#heatPump").show();
+      $("#heatPump_btn").show();
+      oneBack();
+    }
+
+
+    function hptestResultSubmit() {
+      allow = true;
+
+
+      $("input[name=hptest_ductLeakage]").is(":checked") ? nothing = true : allow = false;
+
+      if(allow){
+          $("#hptestResult").hide();
+          $("#hpnotes").show();
+          $("#hersTitle").append(" > Notes");
+      }
+       
+
+    }
+
+    function hptestResult_Back() {
+      
+      $("#heatPump").show();
+      $("#heatPump_btn").show();
+      $("#hptestResult").hide();
+      oneBack();
+    }
+
+
+
+    function hpnotes_Back() {
+      $("#hptestResult").show();
+      $("#hpnotes").hide();
+   
+      oneBack();
+    }
+
+    function hpsubmitSend(){
+      $(".loader").css("display","flex");
+      $("input[name=hp_submit]").val('Submit');
+      $("#hpsubmit").click();
+    }
+
+    function hpnew_form(){
+      $(".loader").css("display","flex");
+      $("#hpsubmit").click();
+    }
+
+
+
+
+    /* =====================================================
+                      INDOOR UNIT
+    ======================================================== */
+
+
     function indoorUnit_Submit() {
       allow = true;
 
-      fulltime = $("input[name=in_fulltime]:checked").val();
-      localStorage.setItem('fulltime', fulltime);
+      $('input[name="in_manufacturer[]"]').each(function() { $(this).val() == '' ? allow = false : nothing = true; });
+      $('input[name="in_model[]"]').each(function() { $(this).val() == '' ? allow = false : nothing = true; });
+      $('input[name="in_serial[]"]').each(function() { $(this).val() == '' ? allow = false : nothing = true; });
+      $('input[name="in_btu_input[]"]').each(function() { $(this).val() == '' ? allow = false : nothing = true; });
+      $('input[name="in_btu_output[]"]').each(function() { $(this).val() == '' ? allow = false : nothing = true; });
 
-      $("input[name=in_fulltime]").is(":checked") ? nothing = true : allow = false;
-
-
-      $("input[name=in_manufacturer]").val() == '' ? allow = false : nothing = true;
-      $("input[name=in_model]").val() == '' ? allow = false : nothing = true;
-      $("input[name=in_serial]").val() == '' ? allow = false : nothing = true;
-      $("input[name=in_btu_input]").val() == '' ? allow = false : nothing = true;
-      $("input[name=in_btu_output]").val() == '' ? allow = false : nothing = true;
-
-
-      
-
-
-      if (allow) {
-
-        // if (fulltime == "Yes") {
-        //   $("#indoorUnit").hide();
-        //   $("#windows").show();
-        //   $("#hersTitle").append(" > Windows");
-
-        // }else{
-        //   $("#indoorUnit").hide();
-        //   // $("#notes").show();
-        //   // $("#hersTitle").append(" > Notes");
-        //   $("#condenser").show();
-        //   $("#hersTitle").append(" > Condenser");
-
-        // }
+      if (allow) {     
 
         $("#indoorUnit").hide();
-        // $("#notes").show();
-        // $("#hersTitle").append(" > Notes");
+        $("#indoorUnit_btn").hide();
+ 
         $("#condenser").show();
+        $("#condenser_btn").show();
         $("#hersTitle").append(" > Condenser");
        
       } else {
@@ -2046,301 +1200,139 @@
 
     function indoorUnit_Back() {
       $("#indoorUnit").hide();
-      // $("#condenser").show();
+      $("#indoorUnit_btn").hide();
       $("#initialForm").show();
       oneBack();
     }
 
 
+    function indoorUnit_addMore(){
+      $( ".iu_clone:first" ).clone().appendTo( "#indoorUnit" );
+      $("#indoorUnit .iu_clone:last input").val('');
+      // $("#indoorUnit .ah_clone:last select").val('Default');
+      $("#indoorUnit .iu_clone:last input[name='in_image1[]']").attr("name", "in_image"+ $("#indoorUnit .iu_clone").length+"[]" );
+      $("#indoorUnit .iu_clone:last .file-upload-browse").attr("onclick",  "in_image_click('in_image"+$("#indoorUnit .iu_clone").length+"')" );
 
-    // (10)
-    function testResultSubmit() {
+    }
+    function indoorUnit_lessOne(){
+      $("#indoorUnit .iu_clone:last").remove();
+    }
+
+    function in_image_click(p){
+      if(p != 'in_image1'){
+        $(`input[name='${p}[]']`).click();
+      }      
+    }
+
+
+
+    function condenser_Submit() {
       allow = true;
-      unit_type = localStorage.getItem('unit_type');
-      fulltime = localStorage.getItem('fulltime');
-
-      $("input[name=test_ductLeakage]").is(":checked") ? nothing = true : allow = false;
 
 
-      if (unit_type == "Package_Unit" && allow) {
+      $('input[name="con_manufacturer[]"]').each(function() { $(this).val() == '' ? allow = false : nothing = true; });
+      $('input[name="con_model[]"]').each(function() { $(this).val() == '' ? allow = false : nothing = true; });
+      $('input[name="con_serial[]"]').each(function() { $(this).val() == '' ? allow = false : nothing = true; });
+      $('input[name="con_btu_input[]"]').each(function() { $(this).val() == '' ? allow = false : nothing = true; });
+      $('input[name="con_pounds[]"]').each(function() { $(this).val() == '' ? allow = false : nothing = true; });
+      $('input[name="con_ounces[]"]').each(function() { $(this).val() == '' ? allow = false : nothing = true; });
+      $('select[name="con_tonnage[]"]').each(function() { $(this).val() == 'Default' ? allow = false : nothing = true; });
+      $('select[name="con_seer[]"]').each(function() { $(this).val() == 'Default' ? allow = false : nothing = true; });
+
+      if (allow) {
 
         if (fulltime == "Yes") {
-          $("#testResult").hide();
-          $("#windows").show();
-          $("#hersTitle").append(" > Windows");
+          $("#condenser").hide();
+          $("#condenser_btn").hide();
+          $("#dufulltime_yes").show();
+          $("#hersTitle").append(" > Images");
 
-        } else {
-          $("#testResult").hide();
-          $("#notes").show();
+        }else{
+          $("#condenser").hide();
+          $("#condenser_btn").hide();
+          $("#dunotes").show();
           $("#hersTitle").append(" > Notes");
+
         }
-
-
-
-
-      } else if (unit_type == "Central_Split_AC" && allow) {
-        $("#testResult").hide();
-        // $("#notes").show(); 
-        $("#refrigerant").show();
-        $("#hersTitle").append(" > Refrigerant");
-        //$("#hersTitle").append(" > Notes");
-
-      } else if (unit_type == "Heat_Pump" && allow) {
-        $("#testResult").hide();
-        // $("#notes").show(); 
-        $("#refrigerant").show();
-        $("#hersTitle").append(" > Refrigerant");
-        // $("#hersTitle").append(" > Notes");
-
-      } else if (unit_type == "Ductless_Unit" && allow) {
-
+        
+      } else {
+        alert("Kindly fill all the fields");
       }
-
     }
 
-    function testResult_Back() {
-      unit_type = localStorage.getItem('unit_type');
-      fulltime = localStorage.getItem('fulltime');
-      if (unit_type == "Package_Unit") {
-        $("#packageUnit1").show();
-        $("#packageUnit_btn").show();
-        
-      } else if (unit_type == "Central_Split_AC" && allow) {
-        fulltime == 'Yes' ? $("#acCoil").show() : $("#centralSplit").show();
+    function condenser_Back() {
 
-      } else if (unit_type == "Heat_Pump" && allow) {
-        $("#airHandler").show()
-      } else if (unit_type == "Ductless_Unit" && allow) {
-
-      }
-      $("#testResult").hide();
+      $("#condenser").hide();
+      $("#condenser_btn").hide();
+      $("#indoorUnit").show();
+      $("#indoorUnit_btn").show();
+      // $("#initialForm").show();
       oneBack();
     }
 
+    function condenser_addMore(){
+      $( ".c_clone:first" ).clone().appendTo( "#condenser" );
+      $("#condenser .c_clone:last input").val('');
+      // $("#indoorUnit .ah_clone:last select").val('Default');
+      $("#condenser .c_clone:last input[name='con_image1[]']").attr("name", "con_image"+ $("#condenser .c_clone").length+"[]" );
+      $("#condenser .c_clone:last .file-upload-browse").attr("onclick",  "con_image_click('con_image"+$("#condenser .c_clone").length+"')" );
 
-    // (10.1)
+    }
+    function condenser_lessOne(){
+      $("#condenser .c_clone:last").remove();
+    }
 
-    function refrigerantSubmit() {
-      fulltime = localStorage.getItem('fulltime');
+    function con_image_click(p){
+      if(p != 'con_image1'){
+        $(`input[name='${p}[]']`).click();
+      }      
+    }
 
-      if (fulltime == "Yes") {
-        $("#refrigerant").hide();
-        $("#windows").show();
-        $("#hersTitle").append(" > Windows");
 
-      } else {
-        $("#refrigerant").hide();
-        $("#notes").show();
+
+    function dufulltime_Submit(){
+        $("#dufulltime_yes").hide();
+        $("#dunotes").show();
         $("#hersTitle").append(" > Notes");
-      }
-
     }
 
-    function refrigerant_Back() {
-      $("#refrigerant").hide();
-      $("#testResult").show();
-      oneBack();
-    }
-
-    // (10.2)
-
-    function windowSubmit() {
-      $("#windows").hide();
-      $("#water_heater").show();
-      $("#hersTitle").append(" > Water Heater");
-
-    }
-
-    function window_Back() {
-
-      unit_type = localStorage.getItem('unit_type');
-
-      if(unit_type == "Ductless_Unit" ){
-        $("#windows").hide();
-        $("#indoorUnit").show();
-        oneBack();
-        
-      }else if (unit_type == "Package_Unit"){
-        $("#windows").hide();
-        $("#testResult").show();
-        oneBack();
-      }else{
-        $("#windows").hide();
-        $("#refrigerant").show();
-        oneBack();
-      }
-      
-    }
-
-
-    // (10.3)
-
-    function waterSubmit() {
-      $("#water_heater").hide();
-      $("#kitchen").show();
-      $("#hersTitle").append(" > Kitchen Hood");
-
-    }
-
-    function water_Back() {
-      $("#water_heater").hide();
-      $("#windows").show();
-      oneBack();
-    }
-
-
-    // (10.4)
-
-    function kitchenSubmit() {
-      $("#kitchen").hide();
-      $("#notes").show();
-      $("#hersTitle").append(" > Notes");
-
-    }
-
-    function kitchen_Back() {
-      $("#kitchen").hide();
-      $("#water_heater").show();
+    function dufulltime_Back(){
+      $("#dufulltime_yes").hide();
+      $("#condenser").show();
+      $("#condenser_btn").show();
       oneBack();
     }
 
 
 
 
-    //  (11)
-    function notes_Back() {
-      unit_type = localStorage.getItem('unit_type');
-      if (unit_type == "Ductless_Unit") {
-        $("#indoorUnit").show();
-      } else {
-        $("#testResult").show();
-      }
-
-      $("#notes").hide();
+    function dunotes_Back() {
+   
+      $("#dunotes").hide();
+      $("#condenser").show();
+      $("#condenser_btn").show();
       oneBack();
     }
 
-
-
-
-    //Clear Initial Form
-    function initialClear() {
-      $("input[name=test_name]").val('');
-      $("input[name=company_name]").val('');
-      $("input[name=site_address]").val('');
-      $("input[name=duct_location]").prop('checked', false);
-      $("input[name=email]").val('');
-      $('select[name=number_of_bedroom] option[value=Default]').attr('selected', 'selected');
-      $("input[name=unit_type]").prop('checked', false);
+    function dusubmitSend(){
+      $(".loader").css("display","flex");
+      $("input[name=hp_submit]").val('Submit');
+      $("#dusubmit").click();
     }
 
-    function packageUnit1_Clear() {
-      $("input[name=pu_manufacturer]").val('');
-      $("input[name=pu_model]").val('');
-      $("input[name=pu_serial]").val('');
-      $("input[name=pu_btu_input]").val('');
-      $("input[name=pu_btu_output]").val('');
-      $("input[name=pu_efficiency]").val('');
-      $('select[name=pu_tonnage] option[value=Default]').attr('selected', 'selected');
-      $('select[name=pu_seer] option[value=Default]').attr('selected', 'selected');
-    }
-
-
-    function centralSplit_Clear() {
-      $("input[name=cs_manufacturer]").val('');
-      $("input[name=cs_model]").val('');
-      $("input[name=cs_serial]").val('');
-      $('select[name=cs_tonnage] option[value=Default]').attr('selected', 'selected');
-      $('select[name=cs_seer] option[value=Default]').attr('selected', 'selected');
-    }
-
-    function heatPump_Clear() {
-      $("input[name=heat_manufacturer]").val('');
-      $("input[name=heat_model]").val('');
-      $("input[name=heat_serial]").val('');
-      $('select[name=heat_tonnage] option[value=Default]').attr('selected', 'selected');
-      $('select[name=heat_seer] option[value=Default]').attr('selected', 'selected');
+    function dunew_form(){
+      $(".loader").css("display","flex");
+      $("#dusubmit").click();
     }
 
 
 
 
 
-    function centralGas_Clear() {
-      $("input[name=cg_manufacturer]").val('');
-      $("input[name=cg_model]").val('');
-      $("input[name=cg_serial]").val('');
-      $("input[name=cg_btu_input]").val('');
-      $("input[name=cg_btu_output]").val('');
-      $("input[name=cg_efficiency]").val('');
-      $("input[name=cg_fulltime]").prop('checked', false);
 
-    }
-
-    function acCoil_Clear() {
-      $("input[name=acc_manufacturer]").val('');
-      $("input[name=acc_model]").val('');
-      $("input[name=acc_serial]").val('');
-
-    }
+    //================
 
 
-    function airHandler_Clear() {
-      $("input[name=air_manufacturer]").val('');
-      $("input[name=air_model]").val('');
-      $("input[name=air_serial]").val('');
-      $("input[name=air_btu_input]").val('');
-      $("input[name=air_btu_output]").val('');
-      $("input[name=air_efficiency]").val('');
-
-    }
-
-    function condenser_Clear() {
-      $("input[name=con_manufacturer]").val('');
-      $("input[name=con_model]").val('');
-      $("input[name=con_serial]").val('');
-      $("input[name=con_btu_input]").val('');
-      $('select[name=con_tonnage] option[value=Default]').attr('selected', 'selected');
-      $('select[name=con_seer] option[value=Default]').attr('selected', 'selected');
-    }
-
-
-    function indoorUnit_Clear() {
-
-      $("input[name=in_manufacturer]").val('');
-      $("input[name=in_model]").val('');
-      $("input[name=in_serial]").val('');
-      $("input[name=in_btu_input]").val('');
-      $("input[name=in_btu_output]").val('');
-      $("input[name=in_pounds]").val('');
-      $("input[name=in_ounces]").val('');
-
-    }
-
-
-
-
-
-    function testResult_Clear() {
-      $("input[name=test_fanWatt]").val('');
-      $('select[name=test_ductLeakage] option[value=Default]').attr('selected', 'selected');
-      $("input[name=test_duct_leak_result]").val('');
-      $("input[name=test_cfm1]").val('');
-      $("input[name=test_location1]").val('');
-      $("input[name=test_cfm2]").val('');
-      $("input[name=test_location2]").val('');
-      $("input[name=test_cfm3]").val('');
-      $("input[name=test_location3]").val('');
-      $("input[name=test_cfm4]").val('');
-      $("input[name=test_location4]").val('');
-      $("input[name=test_cfm5]").val('');
-      $("input[name=test_location5]").val('');
-    }
-
-
-    function notes_Clear() {
-      $("input[name=notes]").val('');
-    }
     function oneBack() {
       title = $("#hersTitle").html();
       title = title.substr(0, title.lastIndexOf('&gt;') - 1);

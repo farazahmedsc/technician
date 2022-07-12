@@ -1,4 +1,8 @@
-<div class="d-none">
+
+
+<script>
+  console.log('package unit load');
+var package_unit = `<div class="d-none">
   <input type="text" name="pu_url">
   <input type="text" name="pu_no_of_form">
   <input type="text" name="pu_tech_id">
@@ -136,6 +140,7 @@
 </div>
 
 <div id="packageUnit_btn">
+<!--
   <div class="col-md-12">
     <button type="button" class="btn btn-primary mr-2" onclick="packageUnit1_Back()">Back</button>
     <button type="button" class="btn btn-primary mr-2" onclick="packageUnit1_Submit()">Next</button>
@@ -144,6 +149,7 @@
 
   </div>
 
+  -->
   <div class="col-md-12 mt-4">
     <button type="button" class="btn btn-info mr-2" onclick="packageUnit_addMore()">Add More</button>
     <button type="button" class="btn btn-danger mr-2" onclick="packageUnit_lessOne()">Less One</button>
@@ -307,7 +313,7 @@
   </div><!-- col-md-6 End-->
 
 
-
+<!--
   <div class="col-md-12">
     <button type="button" class="btn btn-primary mr-2" onclick="putestResult_Back()">Back</button>
 
@@ -316,6 +322,8 @@
       Form</button>
 
   </div>
+
+  -->
 
 
 
@@ -418,10 +426,13 @@
     </div>
   </div><!-- col-md-6 End-->
 
+<!--
   <div class="col-md-12">
     <button type="button" class="btn btn-primary mr-2" onclick="pufulltime_Back()">Back</button>
     <button type="button" class="btn btn-primary mr-2" onclick="pufulltime_Submit()">Next</button>
   </div>
+
+  -->
 
 </div>
 <!-- Refrigerant (MCH 25) 10.1 End -->
@@ -445,7 +456,7 @@
   </div><!-- col-md-6 End-->
 
 
-
+<!--
   <div class="col-md-12">
     <button type="button" class="btn btn-primary mr-2" onclick="punotes_Back()">Back</button>
     <button type="button" class="btn btn-primary mr-2" id="firstNotesSubmit" onclick="pusubmitSend()">Submit</button>
@@ -453,6 +464,10 @@
     <button type="button" class="btn btn-light float-right" onclick="notes_Clear()">Clear Form</button>
   <button type="submit" class="d-none" id="pusubmit">Submit</button>
   </div>
+  -->
 
 
-</div>
+</div>`;
+
+
+</script>

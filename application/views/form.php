@@ -4591,25 +4591,10 @@
       
 
 
-      if (allow) {
-
-        // if (fulltime == "Yes") {
-        //   $("#indoorUnit").hide();
-        //   $("#windows").show();
-        //   $("#hersTitle").append(" > Windows");
-
-        // }else{
-        //   $("#indoorUnit").hide();
-        //   // $("#notes").show();
-        //   // $("#hersTitle").append(" > Notes");
-        //   $("#condenser").show();
-        //   $("#hersTitle").append(" > Condenser");
-
-        // }
+      if (allow) {     
 
         $("#indoorUnit").hide();
-        // $("#notes").show();
-        // $("#hersTitle").append(" > Notes");
+ 
         $("#condenser").show();
         $("#hersTitle").append(" > Condenser");
        

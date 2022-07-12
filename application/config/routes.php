@@ -58,6 +58,7 @@ $route['login'] = 'Hers/index';
 $route['home'] = 'Hers/home';
 $route['dashboard'] = 'Hers/dashboard';
 $route['form'] = 'Hers/form';
+$route['unset'] = 'Hers/unsetForm';
 
 $route['setting'] = 'Hers/setting';
 $route['logout'] = 'Hers/logout';
